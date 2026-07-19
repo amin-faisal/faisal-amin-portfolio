@@ -170,3 +170,80 @@ export const EDUCATION = [
   { period: '2020 — 2024', title: 'BE Mechanical Engineering', place: 'NUST, Islamabad' },
   { period: '2023', title: 'Google UX Design Specialization', place: 'Coursera' },
 ]
+
+export const TABS = [
+  { id: 'about', label: 'About', path: '/' },
+  { id: 'work', label: 'Work', path: '/work' },
+  { id: 'services', label: 'Services', path: '/services' },
+  { id: 'contact', label: 'Contact', path: '/contact' },
+]
+
+// Files in /public — keys are matched case-insensitively against names.
+export const LOGOS = {
+  Modalys: 'Modalys.png',
+  'Natural Heroes': 'Natural Heroes.png',
+  Clyro: 'Clyro.png',
+  truID: 'TruID.png',
+  OctiLearn: 'Octilearn.png',
+  ChipXprt: 'ChipXPRT.png',
+  Takhleeq: 'Takhleeq.png',
+  Face44: 'Face44.png',
+  NUST: 'NUST.png',
+  Uxcel: 'UXCEL.png',
+  Coursera: 'Coursera.png',
+}
+
+export const RESUME = 'Faisal Amin Resume.pdf'
+
+export const OPEN_TO = [
+  { title: 'Senior Product Designer', type: 'Full-time roles' },
+  { title: 'Product Design', type: 'Freelance projects' },
+  { title: 'Web Design', type: 'Freelance projects' },
+]
+
+export const CONNECTIONS = [
+  { name: 'Modalys', sub: 'Occupational healthcare SaaS · Current company' },
+  { name: 'Natural Heroes', sub: 'E-commerce · Design partner' },
+  { name: 'Clyro', sub: '50+ SaaS platforms shipped together' },
+  { name: 'truID', sub: 'Identity verification' },
+  { name: 'OctiLearn', sub: 'EdTech · 3,000+ pre-launch sign-ups' },
+  { name: 'ChipXprt', sub: 'Electronics platform' },
+  { name: 'Takhleeq', sub: 'Elements Learning · 1,000+ sales' },
+  { name: 'Face44', sub: 'Crop.photo' },
+]
+
+export const PUBLIC_URL = 'amin-faisal.github.io/faisal-amin-portfolio'
+
+export const CURRENT_COMPANY = {
+  name: 'Modalys',
+  sub: 'Occupational healthcare SaaS — leading end-to-end design of 4 core modules since Feb 2026.',
+}
+
+export const EDUCATION_SHORT = { name: 'NUST', sub: 'BE Mechanical Engineering' }
+
+export const ABOUT = [
+  "I'm a mechanical engineer (NUST '24) who fell for product design and never looked back. Three-plus years later, my work runs in front of 100K+ active users across healthcare, edtech, AI and e-commerce — 12+ shipped projects generating $500K+ in MARR.",
+  "I function as a founding designer that talks shipping: research, information architecture, design systems, high-fidelity UI, and the awkward middle bits between design and engineering. Right now I'm at Modalys, leading end-to-end design of an occupational healthcare SaaS across 4 core modules.",
+  'Before that: 50+ SaaS platforms at Clyro, an AI that reads CAD drawings at 93% accuracy, an e-learning platform with 3,000+ pre-launch sign-ups, and an AI nurse interface that cut manual data entry by 40%. In short — a designer who gives a shit.',
+]
+
+export const SKILLS = [
+  'Product Design',
+  'UX Research',
+  'Design Systems',
+  'Information Architecture',
+  'Prototyping',
+  'Interaction Design',
+  'WCAG 2.1 Accessibility',
+  'Developer Handoff',
+]
+
+export const CLIENT_META = [
+  { name: 'Natural Heroes', sub: 'E-commerce · Design partner' },
+  { name: 'Clyro', sub: '50+ SaaS platforms shipped' },
+  { name: 'truID', sub: 'Identity verification' },
+  { name: 'OctiLearn', sub: 'EdTech · 3,000+ pre-launch sign-ups' },
+  { name: 'ChipXprt', sub: 'Electronics platform' },
+  { name: 'Takhleeq', sub: 'Elements Learning · 1,000+ sales' },
+  { name: 'Face44', sub: 'Crop.photo' },
+]
