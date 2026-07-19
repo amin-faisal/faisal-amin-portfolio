@@ -5,6 +5,7 @@ import TopNav from './components/TopNav.jsx'
 import ProfileCard from './components/ProfileCard.jsx'
 import RightRail from './components/RightRail.jsx'
 import NetworkPage from './components/NetworkPage.jsx'
+import CaseStudyPage from './components/CaseStudyPage.jsx'
 import { MessagingProvider, MessagingPanel } from './components/Messaging.jsx'
 import AboutTab from './components/tabs/AboutTab.jsx'
 import WorkTab from './components/tabs/WorkTab.jsx'
@@ -49,6 +50,9 @@ function ProfilePage() {
 
 export default function App() {
   const { pathname } = useLocation()
+  const caseSlug = pathname.startsWith('/work/')
+    ? pathname.slice('/work/'.length).replace(/\/+$/, '')
+    : null
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -57,7 +61,13 @@ export default function App() {
   return (
     <MessagingProvider>
       <TopNav />
-      {pathname === '/network' ? <NetworkPage /> : <ProfilePage />}
+      {pathname === '/network' ? (
+        <NetworkPage />
+      ) : caseSlug ? (
+        <CaseStudyPage slug={caseSlug} />
+      ) : (
+        <ProfilePage />
+      )}
       <MessagingPanel />
     </MessagingProvider>
   )

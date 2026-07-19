@@ -1,9 +1,11 @@
-import { TrendingUp } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { ArrowRight, TrendingUp } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card.jsx'
 import Badge from '../ui/badge.jsx'
 import { PROJECTS } from '../../data/content.js'
 
 export default function WorkTab() {
+  const navigate = useNavigate()
   return (
     <Card>
       <CardHeader>
@@ -27,6 +29,14 @@ export default function WorkTab() {
                 <TrendingUp className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                 {p.result}
               </p>
+              {p.caseStudy && (
+                <button
+                  onClick={() => navigate(`/work/${p.caseStudy}`)}
+                  className="mt-3 flex w-fit cursor-pointer items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                >
+                  Read case study <ArrowRight className="size-4" aria-hidden="true" />
+                </button>
+              )}
             </div>
           </article>
         ))}

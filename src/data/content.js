@@ -24,6 +24,7 @@ export const PROJECTS = [
     desc: 'End-to-end design of an occupational healthcare platform — research, IA and design system across 4 core modules.',
     result: 'Fragmented workflows → one scalable platform',
     img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
+    caseStudy: 'modalys',
   },
   {
     title: 'OctiLearn',
@@ -199,6 +200,59 @@ export const OPEN_TO = [
   { title: 'Senior Product Designer', type: 'Full-time roles' },
   { title: 'Product Design', type: 'Freelance projects' },
   { title: 'Web Design', type: 'Freelance projects' },
+]
+
+// Case studies — one entry per project, rendered by CaseStudyPage at
+// /work/<slug>. Every study needs challenge / solution / outcome.
+export const CASE_STUDIES = [
+  {
+    slug: 'modalys',
+    project: 'Modalys',
+    tag: 'Healthcare SaaS',
+    title: 'Designing one platform for occupational healthcare',
+    subtitle:
+      'How fragmented HR and medical workflows became a single scalable SaaS — research, IA and a design system across 4 core modules.',
+    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop',
+    published: 'July 2026',
+    readTime: '4 min read',
+    role: 'Senior Product Designer',
+    timeline: 'Feb 2026 — Present',
+    scope: ['UX Research', 'Information Architecture', 'Design System', 'High-fidelity UI'],
+    challenge: {
+      intro:
+        'Occupational healthcare runs on fragmented tools: employee records live in one system, medical checkups in another, and compliance in spreadsheets. Modalys set out to unify all of it — which handed design a set of hard problems at once.',
+      points: [
+        'Four deeply interconnected modules with complex data relationships',
+        'Two very different audiences — medical professionals and HR admins — with different mental models',
+        'Dense, heavy data entry (organization structures, employee onboarding) that had to feel light',
+        'No existing design language to build on — everything from zero',
+      ],
+    },
+    solution: {
+      intro:
+        'I functioned as the founding designer: starting where the product actually lives, then turning research into structure and structure into shippable UI.',
+      points: [
+        'Mapped real workflows with stakeholders and translated them into a clear information architecture across the 4 modules',
+        'Tamed dense forms with progressive disclosure and phased data input',
+        'Built a scalable design system — structured components and interaction patterns developers can actually ship',
+        'Designed and validated high-fidelity UI module by module, simplifying processes like organization structures and employee onboarding',
+      ],
+    },
+    outcome: {
+      intro:
+        'Fragmented workflows became one scalable platform — with a design foundation that keeps up as Modalys grows.',
+      metrics: [
+        { value: '4', label: 'core modules unified' },
+        { value: '1', label: 'platform replacing fragmented tools' },
+        { value: '0→1', label: 'design system from scratch' },
+      ],
+      points: [
+        'Organization structures and employee onboarding simplified end-to-end',
+        'Consistent patterns cut design–development friction',
+        'A foundation ready for the modules still to come',
+      ],
+    },
+  },
 ]
 
 // Company connections — described as LinkedIn describes them (what they are,

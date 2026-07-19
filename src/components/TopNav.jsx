@@ -26,12 +26,24 @@ import {
   TOOLS,
   CONNECTIONS,
   RESUME,
+  CASE_STUDIES,
 } from '../data/content.js'
 
 const BASE = import.meta.env.BASE_URL
 
 const SEARCH_INDEX = [
-  ...PROJECTS.map((p) => ({ label: p.title, sub: `Project · ${p.tag}`, path: '/work', icon: FileText })),
+  ...PROJECTS.map((p) => ({
+    label: p.title,
+    sub: `Project · ${p.tag}`,
+    path: p.caseStudy ? `/work/${p.caseStudy}` : '/work',
+    icon: FileText,
+  })),
+  ...CASE_STUDIES.map((c) => ({
+    label: `${c.project} case study`,
+    sub: c.title,
+    path: `/work/${c.slug}`,
+    icon: FileText,
+  })),
   ...SERVICES.map((s) => ({ label: s.title, sub: 'Service', path: '/services', icon: Wrench })),
   ...EXPERIENCE.map((e) => ({ label: e.company, sub: e.role, path: '/', icon: Building2 })),
   ...EDUCATION.map((e) => ({ label: e.title, sub: `Education · ${e.place}`, path: '/', icon: GraduationCap })),
