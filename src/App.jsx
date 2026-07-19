@@ -26,7 +26,7 @@ function ProfilePage() {
   const Content = TAB_CONTENT[active.id]
 
   return (
-    <main className="mx-auto grid max-w-[1128px] grid-cols-1 items-start gap-4 px-2 pt-4 pb-12 sm:gap-6 sm:px-4 sm:pt-6 lg:grid-cols-[minmax(0,1fr)_300px]">
+    <main className="mx-auto grid max-w-[1128px] grid-cols-1 items-start gap-4 px-2 pt-4 pb-24 sm:gap-6 sm:px-4 sm:pt-6 sm:pb-12 lg:grid-cols-[minmax(0,1fr)_300px]">
       <div className="flex min-w-0 flex-col gap-4 sm:gap-6">
         <ProfileCard />
         <AnimatePresence mode="wait">

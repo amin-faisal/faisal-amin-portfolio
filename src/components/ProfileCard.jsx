@@ -1,13 +1,33 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { BadgeCheck, BriefcaseBusiness, Download, SquareArrowOutUpRight, X } from 'lucide-react'
+import {
+  BadgeCheck,
+  BriefcaseBusiness,
+  Download,
+  Globe,
+  Mail,
+  MapPin,
+  SquareArrowOutUpRight,
+  X,
+} from 'lucide-react'
 import { Card } from './ui/card.jsx'
 import Button from './ui/button.jsx'
 import LogoTile from './LogoTile.jsx'
+import { LinkedinIcon } from './icons.jsx'
 import { useMessaging } from './Messaging.jsx'
 import { cn } from '../lib/utils.js'
-import { SITE, STATS, CLIENTS, TABS, CURRENT_COMPANY, EDUCATION_SHORT, OPEN_TO, RESUME } from '../data/content.js'
+import {
+  SITE,
+  STATS,
+  CLIENTS,
+  TABS,
+  CURRENT_COMPANY,
+  EDUCATION_SHORT,
+  OPEN_TO,
+  RESUME,
+  PUBLIC_URL,
+} from '../data/content.js'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -45,8 +65,7 @@ function BannerFallback() {
   )
 }
 
-function OpenToModal({ onClose }) {
-  const { openMessaging } = useMessaging()
+function ModalShell({ title, onClose, children, footer }) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
@@ -58,11 +77,11 @@ function OpenToModal({ onClose }) {
         transition={{ duration: 0.18, ease: 'easeOut' }}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
-        aria-label="Open to work details"
+        aria-label={title}
         className="w-full max-w-md rounded-lg bg-card shadow-xl"
       >
         <header className="flex items-center justify-between border-b border-line px-5 py-4">
-          <h2 className="text-lg font-semibold">Open to work</h2>
+          <h2 className="text-lg font-semibold">{title}</h2>
           <button
             onClick={onClose}
             aria-label="Close"
@@ -71,23 +90,23 @@ function OpenToModal({ onClose }) {
             <X className="size-5" />
           </button>
         </header>
-        <div className="flex flex-col gap-4 px-5 py-4">
-          {OPEN_TO.map((role) => (
-            <div key={role.title} className="flex items-center gap-3">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded bg-muted text-primary">
-                <BriefcaseBusiness className="size-5" aria-hidden="true" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold">{role.title}</p>
-                <p className="text-sm text-muted-foreground">{role.type}</p>
-              </div>
-            </div>
-          ))}
-          <p className="text-sm text-muted-foreground">
-            The fastest way in is a message — it lands straight in my inbox.
-          </p>
-        </div>
-        <footer className="flex justify-end gap-2 border-t border-line px-5 py-3">
+        <div className="flex flex-col gap-4 px-5 py-4">{children}</div>
+        {footer && (
+          <footer className="flex justify-end gap-2 border-t border-line px-5 py-3">{footer}</footer>
+        )}
+      </motion.div>
+    </div>
+  )
+}
+
+function OpenToModal({ onClose }) {
+  const { openMessaging } = useMessaging()
+  return (
+    <ModalShell
+      title="Open to work"
+      onClose={onClose}
+      footer={
+        <>
           <Button size="sm" variant="outline" onClick={onClose}>
             Close
           </Button>
@@ -100,9 +119,60 @@ function OpenToModal({ onClose }) {
           >
             Message Faisal
           </Button>
-        </footer>
-      </motion.div>
-    </div>
+        </>
+      }
+    >
+      {OPEN_TO.map((role) => (
+        <div key={role.title} className="flex items-center gap-3">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded bg-muted text-primary">
+            <BriefcaseBusiness className="size-5" aria-hidden="true" />
+          </span>
+          <div>
+            <p className="text-sm font-semibold">{role.title}</p>
+            <p className="text-sm text-muted-foreground">{role.type}</p>
+          </div>
+        </div>
+      ))}
+      <p className="text-sm text-muted-foreground">
+        The fastest way in is a message — it lands straight in my inbox.
+      </p>
+    </ModalShell>
+  )
+}
+
+const CONTACT_ROWS = [
+  { icon: LinkedinIcon, label: "Faisal's profile", value: 'in/faisal-amin-83a15320b', href: SITE.linkedin },
+  { icon: Mail, label: 'Email', value: SITE.email, href: `mailto:${SITE.email}` },
+  { icon: Globe, label: 'Portfolio', value: PUBLIC_URL, href: `https://${PUBLIC_URL}` },
+  { icon: MapPin, label: 'Location', value: SITE.location },
+]
+
+function ContactInfoModal({ onClose }) {
+  return (
+    <ModalShell title={`${SITE.name} — Contact info`} onClose={onClose}>
+      {CONTACT_ROWS.map(({ icon: Icon, label, value, href }) => (
+        <div key={label} className="flex items-center gap-3">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded bg-muted text-primary">
+            <Icon className="size-5" aria-hidden="true" />
+          </span>
+          <div className="min-w-0">
+            <p className="text-sm font-semibold">{label}</p>
+            {href ? (
+              <a
+                href={href}
+                target={href.startsWith('mailto') ? undefined : '_blank'}
+                rel="noreferrer"
+                className="block truncate text-sm text-primary hover:underline"
+              >
+                {value}
+              </a>
+            ) : (
+              <p className="text-sm text-muted-foreground">{value}</p>
+            )}
+          </div>
+        </div>
+      ))}
+    </ModalShell>
   )
 }
 
@@ -112,6 +182,7 @@ export default function ProfileCard() {
   const { openMessaging } = useMessaging()
   const [moreOpen, setMoreOpen] = useState(false)
   const [openToOpen, setOpenToOpen] = useState(false)
+  const [contactOpen, setContactOpen] = useState(false)
   const moreRef = useRef(null)
 
   useEffect(() => {
@@ -181,7 +252,7 @@ export default function ProfileCard() {
           <p className="mt-1.5 text-sm text-muted-foreground">
             {SITE.location} ·{' '}
             <button
-              onClick={() => navigate('/contact')}
+              onClick={() => setContactOpen(true)}
               className="cursor-pointer font-semibold text-primary hover:underline"
             >
               Contact info
@@ -274,6 +345,7 @@ export default function ProfileCard() {
 
       <AnimatePresence>
         {openToOpen && <OpenToModal onClose={() => setOpenToOpen(false)} />}
+        {contactOpen && <ContactInfoModal onClose={() => setContactOpen(false)} />}
       </AnimatePresence>
     </Card>
   )

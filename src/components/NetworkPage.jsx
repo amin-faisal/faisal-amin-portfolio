@@ -145,7 +145,7 @@ export default function NetworkPage() {
   ]
 
   return (
-    <main className="mx-auto grid max-w-[1128px] grid-cols-1 items-start gap-4 px-2 pt-4 pb-12 sm:gap-6 sm:px-4 sm:pt-6 lg:grid-cols-[300px_minmax(0,1fr)]">
+    <main className="mx-auto grid max-w-[1128px] grid-cols-1 items-start gap-4 px-2 pt-4 pb-24 sm:gap-6 sm:px-4 sm:pt-6 sm:pb-12 lg:grid-cols-[300px_minmax(0,1fr)]">
       <Card>
         <CardContent className="py-4 sm:py-4">
           <h2 className="text-base font-semibold">Manage my network</h2>

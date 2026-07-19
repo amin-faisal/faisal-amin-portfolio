@@ -53,8 +53,8 @@ function SearchBox() {
     : []
 
   return (
-    <div className="relative hidden md:block">
-      <div className="flex h-[34px] w-[260px] items-center gap-2 rounded bg-muted px-3">
+    <div className="relative min-w-0 flex-1 md:flex-none">
+      <div className="flex h-[34px] w-full max-w-[300px] items-center gap-2 rounded bg-muted px-3 md:w-[260px]">
         <Search className="size-4 text-muted-foreground" aria-hidden="true" />
         <input
           type="text"
@@ -69,7 +69,7 @@ function SearchBox() {
       </div>
 
       {focused && q && (
-        <div className="absolute top-[42px] left-0 w-[320px] overflow-hidden rounded-lg border border-line bg-card py-1 shadow-[0_4px_24px_rgba(0,0,0,0.15)]">
+        <div className="absolute top-[42px] left-0 w-full min-w-[280px] overflow-hidden rounded-lg border border-line bg-card py-1 shadow-[0_4px_24px_rgba(0,0,0,0.15)] md:w-[320px]">
           {results.length === 0 && (
             <p className="px-3 py-2.5 text-sm text-muted-foreground">No results for “{query}”</p>
           )}
@@ -119,49 +119,65 @@ export default function TopNav() {
     { label: 'Messaging', icon: MessagesSquare, action: () => openMessaging() },
   ]
 
+  const navButton = ({ label, icon: Icon, path, action }) => {
+    const active = path && pathname === path
+    return (
+      <button
+        key={label}
+        onClick={() => (action ? action() : navigate(path))}
+        className={cn(
+          'relative flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1',
+          active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
+        )}
+      >
+        <Icon className="size-5" aria-hidden="true" />
+        <span className="text-[10px] leading-none whitespace-nowrap sm:text-[12px]">{label}</span>
+        {active && (
+          <span className="absolute inset-x-2 top-0 h-0.5 bg-foreground sm:top-auto sm:bottom-0" />
+        )}
+      </button>
+    )
+  }
+
+  const meButton = (
+    <button
+      onClick={() => navigate('/')}
+      className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground"
+    >
+      <img src={`${BASE}dp.png`} alt="Faisal Amin" className="size-6 rounded-full bg-brand object-cover" />
+      <span className="flex items-center text-[10px] leading-none sm:text-[12px]">
+        Me <ChevronDown className="size-3" aria-hidden="true" />
+      </span>
+    </button>
+  )
+
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-card">
-      <div className="mx-auto flex h-[52px] max-w-[1128px] items-center gap-2 px-4">
-        <button
-          onClick={() => navigate('/')}
-          aria-label="Home"
-          className="shrink-0 cursor-pointer"
-        >
-          <img src={`${BASE}LinkedIn.svg`} alt="" className="size-[34px]" />
-        </button>
-
-        <SearchBox />
-
-        <nav className="ml-auto flex items-center">
-          {items.map(({ label, icon: Icon, path, action }) => {
-            const active = path && pathname === path
-            return (
-              <button
-                key={label}
-                onClick={() => (action ? action() : navigate(path))}
-                className={cn(
-                  'relative flex h-[52px] w-[64px] cursor-pointer flex-col items-center justify-center gap-0.5 sm:w-[80px]',
-                  active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
-                )}
-              >
-                <Icon className="size-5" aria-hidden="true" />
-                <span className="hidden text-[12px] leading-none sm:block">{label}</span>
-                {active && <span className="absolute inset-x-2 bottom-0 h-0.5 bg-foreground" />}
-              </button>
-            )
-          })}
-
-          <button
-            onClick={() => navigate('/')}
-            className="flex h-[52px] w-[64px] cursor-pointer flex-col items-center justify-center gap-0.5 text-muted-foreground hover:text-foreground sm:w-[72px]"
-          >
-            <img src={`${BASE}dp.png`} alt="Faisal Amin" className="size-6 rounded-full bg-brand object-cover" />
-            <span className="hidden items-center text-[12px] leading-none sm:flex">
-              Me <ChevronDown className="size-3" aria-hidden="true" />
-            </span>
+    <>
+      <header className="sticky top-0 z-40 border-b border-line bg-card">
+        <div className="mx-auto flex h-[52px] max-w-[1128px] items-center gap-2 px-4">
+          <button onClick={() => navigate('/')} aria-label="Home" className="shrink-0 cursor-pointer">
+            <img src={`${BASE}LinkedIn.svg`} alt="" className="size-[34px]" />
           </button>
-        </nav>
-      </div>
-    </header>
+
+          <SearchBox />
+
+          {/* Desktop: icons live in the header, LinkedIn-web style */}
+          <nav className="ml-auto hidden h-[52px] items-center sm:flex">
+            {items.map((item) => (
+              <div key={item.label} className="h-full w-[80px]">
+                {navButton(item)}
+              </div>
+            ))}
+            <div className="h-full w-[72px]">{meButton}</div>
+          </nav>
+        </div>
+      </header>
+
+      {/* Mobile: bottom tab bar, LinkedIn-app style */}
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid h-14 grid-cols-5 border-t border-line bg-card sm:hidden">
+        {items.map((item) => navButton(item))}
+        {meButton}
+      </nav>
+    </>
   )
 }

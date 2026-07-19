@@ -69,7 +69,7 @@ export function MessagingPanel() {
   }
 
   return (
-    <div className="fixed right-3 bottom-0 z-50 w-[300px] sm:right-6 sm:w-[340px]">
+    <div className="fixed right-3 bottom-14 z-50 w-[300px] sm:right-6 sm:bottom-0 sm:w-[340px]">
       <AnimatePresence>
         {open ? (
           <motion.div
