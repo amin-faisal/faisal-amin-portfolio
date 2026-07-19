@@ -108,11 +108,11 @@ export const SERVICES = [
     points: ['User interviews & testing', 'Journey mapping', 'Usability audits', 'WCAG 2.1 accessibility'],
   },
   {
-    title: 'Prototyping & Framer',
-    tag: 'Motion',
+    title: 'Design Audit',
+    tag: 'Insight',
     icon: '✦',
-    desc: 'Interactive prototypes and micro-interactions that sell the idea before a line of code.',
-    points: ['Interactive prototypes', 'Micro-interactions', 'Framer websites', 'Lottie & motion design'],
+    desc: 'A thorough teardown of your existing product, design system or flows — with prioritized, actionable insights.',
+    points: ['Heuristic & usability review', 'Design system consistency check', 'Accessibility (WCAG 2.1) pass', 'Prioritized recommendations'],
   },
 ]
 
@@ -201,15 +201,81 @@ export const OPEN_TO = [
   { title: 'Web Design', type: 'Freelance projects' },
 ]
 
+// Company connections — described as LinkedIn describes them (what they are,
+// not what Faisal did there). `meta` mirrors LinkedIn's social-proof line;
+// `metaIcon` is 'school' (NUST chip) or a person's name (initial avatar).
 export const CONNECTIONS = [
-  { name: 'Modalys', sub: 'Occupational healthcare SaaS · Current company' },
-  { name: 'Natural Heroes', sub: 'E-commerce · Design partner' },
-  { name: 'Clyro', sub: '50+ SaaS platforms shipped together' },
-  { name: 'truID', sub: 'Identity verification' },
-  { name: 'OctiLearn', sub: 'EdTech · 3,000+ pre-launch sign-ups' },
-  { name: 'ChipXprt', sub: 'Electronics platform' },
-  { name: 'Takhleeq', sub: 'Elements Learning · 1,000+ sales' },
-  { name: 'Face44', sub: 'Crop.photo' },
+  {
+    name: 'Modalys',
+    industry: 'Information Technology & Services',
+    location: 'Brackley',
+    meta: 'Muhammad & 2 other connections work here · 366 followers',
+    metaIcon: 'Muhammad',
+    url: 'https://modalys.co/',
+    connected: '2026-02-01',
+  },
+  {
+    name: 'Face44',
+    industry: 'Design Services',
+    location: 'Holsbeek, Flemish Region',
+    meta: 'Usman & 14 other connections work here · 4K followers',
+    metaIcon: 'Usman',
+    url: 'https://face44.com/',
+    connected: '2025-12-01',
+  },
+  {
+    name: 'ChipXPRT',
+    industry: 'Semiconductor Manufacturing',
+    location: 'Westminster, Colorado',
+    meta: '10 people from your school were hired here · 5K followers',
+    metaIcon: 'school',
+    url: 'https://www.chipxprt.com/',
+    connected: '2025-06-01',
+  },
+  {
+    name: 'Natural Heroes',
+    industry: 'Personal Care Product Manufacturing',
+    location: 'Utrecht',
+    meta: 'Salman follows this page · 2K followers',
+    metaIcon: 'Salman',
+    url: 'https://www.naturalheroes.nl/',
+    connected: '2025-03-01',
+  },
+  {
+    name: 'truID',
+    industry: 'IT Services and IT Consulting',
+    location: 'Islamabad',
+    meta: '12 people from your school were hired here · 5K followers',
+    metaIcon: 'school',
+    url: 'https://truid.ai/',
+    connected: '2024-09-01',
+  },
+  {
+    name: 'OctiLearn',
+    industry: 'E-Learning Providers',
+    location: 'Dover, Delaware',
+    meta: 'Faizan & 5 other connections follow this page · 1K followers',
+    metaIcon: 'Faizan',
+    url: 'https://octilearn.com/',
+    connected: '2024-08-01',
+  },
+  {
+    name: 'Clyro',
+    industry: 'Design Services',
+    location: 'Islamabad',
+    meta: 'Abdullah & 7 other connections work here · 4K followers',
+    metaIcon: 'Abdullah',
+    url: 'https://clyro.agency/',
+    connected: '2024-04-01',
+  },
+  {
+    name: 'Takhleeq',
+    industry: 'Technology & Innovation',
+    location: 'Pakistan',
+    meta: '1K followers',
+    url: 'https://takhleeq.ai/',
+    connected: '2023-06-01',
+  },
 ]
 
 export const PUBLIC_URL = 'amin-faisal.github.io/faisal-amin-portfolio'
@@ -217,9 +283,14 @@ export const PUBLIC_URL = 'amin-faisal.github.io/faisal-amin-portfolio'
 export const CURRENT_COMPANY = {
   name: 'Modalys',
   sub: 'Occupational healthcare SaaS — leading end-to-end design of 4 core modules since Feb 2026.',
+  url: 'https://modalys.co/',
 }
 
-export const EDUCATION_SHORT = { name: 'NUST', sub: 'BE Mechanical Engineering' }
+export const EDUCATION_SHORT = {
+  name: 'NUST',
+  sub: 'BE Mechanical Engineering',
+  url: 'https://nust.edu.pk/',
+}
 
 export const ABOUT = [
   "I'm a mechanical engineer (NUST '24) who fell for product design and never looked back. Three-plus years later, my work runs in front of 100K+ active users across healthcare, edtech, AI and e-commerce — 12+ shipped projects generating $500K+ in MARR.",
@@ -236,14 +307,4 @@ export const SKILLS = [
   'Interaction Design',
   'WCAG 2.1 Accessibility',
   'Developer Handoff',
-]
-
-export const CLIENT_META = [
-  { name: 'Natural Heroes', sub: 'E-commerce · Design partner' },
-  { name: 'Clyro', sub: '50+ SaaS platforms shipped' },
-  { name: 'truID', sub: 'Identity verification' },
-  { name: 'OctiLearn', sub: 'EdTech · 3,000+ pre-launch sign-ups' },
-  { name: 'ChipXprt', sub: 'Electronics platform' },
-  { name: 'Takhleeq', sub: 'Elements Learning · 1,000+ sales' },
-  { name: 'Face44', sub: 'Crop.photo' },
 ]

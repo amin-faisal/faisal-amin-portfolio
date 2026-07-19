@@ -31,7 +31,7 @@ export default function LogoTile({ name, className }) {
         src={src}
         alt={`${name} logo`}
         className={cn(
-          'size-12 shrink-0 rounded border border-line bg-white object-contain p-0.5',
+          'size-12 shrink-0 rounded-[4px] border border-line bg-white object-contain',
           className,
         )}
       />

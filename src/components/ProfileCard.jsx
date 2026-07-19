@@ -138,7 +138,7 @@ export default function ProfileCard() {
       <div className="px-4 pb-4 sm:px-6">
         {/* Avatar + company/education column */}
         <div className="flex items-start justify-between">
-          <div className="-mt-[62px] shrink-0 rounded-full bg-card p-1 sm:-mt-[104px]">
+          <div className="relative z-10 -mt-[62px] shrink-0 rounded-full bg-card p-1.5 sm:-mt-[76px]">
             <img
               src={`${BASE}dp.png`}
               alt="Faisal Amin"
@@ -147,20 +147,24 @@ export default function ProfileCard() {
           </div>
 
           <div className="hidden flex-col gap-3 pt-3 lg:flex">
-            <button
-              onClick={() => navigate('/')}
-              className="flex cursor-pointer items-center gap-2 text-left text-sm font-semibold hover:underline"
+            <a
+              href={CURRENT_COMPANY.url}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 text-left text-sm font-semibold hover:underline"
             >
-              <LogoTile name={CURRENT_COMPANY.name} className="size-8 rounded-sm" />
+              <LogoTile name={CURRENT_COMPANY.name} className="size-8" />
               {CURRENT_COMPANY.name}
-            </button>
-            <button
-              onClick={() => navigate('/')}
-              className="flex cursor-pointer items-center gap-2 text-left text-sm font-semibold hover:underline"
+            </a>
+            <a
+              href={EDUCATION_SHORT.url}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 text-left text-sm font-semibold hover:underline"
             >
-              <LogoTile name={EDUCATION_SHORT.name} className="size-8 rounded-sm" />
+              <LogoTile name={EDUCATION_SHORT.name} className="size-8" />
               {EDUCATION_SHORT.name}
-            </button>
+            </a>
           </div>
         </div>
 

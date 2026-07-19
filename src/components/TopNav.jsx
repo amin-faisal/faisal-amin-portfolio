@@ -37,7 +37,7 @@ const SEARCH_INDEX = [
   ...EDUCATION.map((e) => ({ label: e.title, sub: `Education · ${e.place}`, path: '/', icon: GraduationCap })),
   ...SKILLS.map((s) => ({ label: s, sub: 'Skill', path: '/', icon: Sparkles })),
   ...TOOLS.map((t) => ({ label: t, sub: 'Tool', path: '/', icon: Sparkles })),
-  ...CONNECTIONS.map((c) => ({ label: c.name, sub: 'Connection', path: '/network', icon: Users })),
+  ...CONNECTIONS.map((c) => ({ label: c.name, sub: `Connection · ${c.industry}`, path: '/network', icon: Users })),
   { label: 'Resume', sub: 'Download PDF', href: `${BASE}${RESUME}`, icon: Download },
   { label: 'Contact info', sub: 'Email · LinkedIn · location', path: '/contact', icon: Mail },
 ]
@@ -125,9 +125,9 @@ export default function TopNav() {
         <button
           onClick={() => navigate('/')}
           aria-label="Home"
-          className="flex size-[34px] shrink-0 cursor-pointer items-center justify-center rounded bg-primary text-lg font-bold text-white"
+          className="shrink-0 cursor-pointer"
         >
-          fa
+          <img src={`${BASE}LinkedIn.svg`} alt="" className="size-[34px]" />
         </button>
 
         <SearchBox />

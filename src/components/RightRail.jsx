@@ -1,7 +1,7 @@
 import { SquareArrowOutUpRight } from 'lucide-react'
 import { Card, CardContent } from './ui/card.jsx'
 import LogoTile from './LogoTile.jsx'
-import { PUBLIC_URL, CURRENT_COMPANY, CLIENT_META, SITE } from '../data/content.js'
+import { PUBLIC_URL, CURRENT_COMPANY, CONNECTIONS, SITE } from '../data/content.js'
 
 export default function RightRail() {
   return (
@@ -40,13 +40,15 @@ export default function RightRail() {
         <CardContent className="py-4 sm:py-4">
           <h2 className="text-base font-semibold">Companies that ship with Faisal</h2>
           <ul className="mt-3 flex flex-col gap-3">
-            {CLIENT_META.map((c) => (
-              <li key={c.name} className="flex items-center gap-3">
-                <LogoTile name={c.name} className="size-10 text-sm" />
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold">{c.name}</p>
-                  <p className="truncate text-xs text-muted-foreground">{c.sub}</p>
-                </div>
+            {CONNECTIONS.filter((c) => c.name !== CURRENT_COMPANY.name).map((c) => (
+              <li key={c.name}>
+                <a href={c.url} target="_blank" rel="noreferrer" className="group flex items-center gap-3">
+                  <LogoTile name={c.name} className="size-10 text-sm" />
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold group-hover:underline">{c.name}</p>
+                    <p className="truncate text-xs text-muted-foreground">{c.industry}</p>
+                  </div>
+                </a>
               </li>
             ))}
           </ul>
