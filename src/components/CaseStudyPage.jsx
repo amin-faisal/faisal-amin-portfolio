@@ -68,7 +68,7 @@ export default function CaseStudyPage({ slug }) {
             {/* Author row — LinkedIn article style */}
             <div className="mt-4 flex items-center gap-3 border-y border-line py-3">
               <img
-                src={`${BASE}dp.png`}
+                src={`${BASE}dp.webp`}
                 alt={SITE.name}
                 className="size-12 rounded-full bg-brand object-cover"
               />
@@ -173,7 +173,7 @@ export default function CaseStudyPage({ slug }) {
         <Card>
           <CardContent className="py-4 text-center sm:py-4">
             <img
-              src={`${BASE}dp.png`}
+              src={`${BASE}dp.webp`}
               alt={SITE.name}
               className="mx-auto size-16 rounded-full bg-brand object-cover"
             />

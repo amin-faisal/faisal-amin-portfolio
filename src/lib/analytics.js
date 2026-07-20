@@ -10,9 +10,18 @@ const HOST = import.meta.env.VITE_PUBLIC_POSTHOG_HOST ?? 'https://us.i.posthog.c
 // still paints at the old speed and analytics attach a moment later.
 let instance = null
 
+// Defer to after first paint, when the main thread is free. Importing at module
+// scope put this chunk on the critical path and delayed the largest paint.
+const whenIdle = (fn) => {
+  const run = () => (window.requestIdleCallback ?? ((cb) => setTimeout(cb, 200)))(fn)
+  if (document.readyState === 'complete') run()
+  else window.addEventListener('load', run, { once: true })
+}
+
 // Only the deployed site reports. Local dev would otherwise fill the project
 // with pageviews from your own work-in-progress.
 const ready = !import.meta.env.PROD ? null : (async () => {
+  await new Promise(whenIdle)
   const { default: posthog } = await import('posthog-js')
 
   posthog.init(KEY, {

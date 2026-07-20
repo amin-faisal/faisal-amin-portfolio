@@ -33,7 +33,7 @@ import {
 
 const BASE = import.meta.env.BASE_URL
 
-// CSS recreation of the purple banner — shown while public/banner.png loads (or if it's missing).
+// CSS recreation of the purple banner — shown while public/banner.webp loads (or if it's missing).
 function BannerFallback() {
   return (
     <div className="absolute inset-0 flex items-center justify-between gap-6 bg-brand px-[5%]">
@@ -75,7 +75,7 @@ function OpenToModal({ onClose }) {
       subtitle={`${SITE.name} · ${SITE.location}`}
       lead={
         <img
-          src={`${BASE}dp.png`}
+          src={`${BASE}dp.webp`}
           alt=""
           className="size-10 shrink-0 rounded-full bg-brand object-cover ring-2 ring-success/60"
         />
@@ -198,8 +198,11 @@ export default function ProfileCard() {
       <div className="relative aspect-[1584/396] w-full overflow-hidden">
         <BannerFallback />
         <img
-          src={`${BASE}banner.png`}
+          src={`${BASE}banner.webp`}
           alt=""
+          // Largest above-the-fold image — fetch it ahead of everything else.
+          fetchPriority="high"
+          decoding="async"
           className="absolute inset-0 size-full object-cover"
           onError={(e) => (e.currentTarget.style.display = 'none')}
         />
@@ -210,7 +213,7 @@ export default function ProfileCard() {
         <div className="flex items-start justify-between">
           <div className="relative z-10 -mt-[62px] shrink-0 rounded-full bg-card p-1.5 sm:-mt-[76px]">
             <img
-              src={`${BASE}dp.png`}
+              src={`${BASE}dp.webp`}
               alt="Faisal Amin"
               className="size-[116px] rounded-full bg-brand object-cover sm:size-[144px]"
             />

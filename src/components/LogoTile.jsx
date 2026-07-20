@@ -30,6 +30,12 @@ export default function LogoTile({ name, className }) {
       <img
         src={src}
         alt={`${name} logo`}
+        // Logos sit in Experience, Education and the right rail — all below the
+        // fold, so they shouldn't compete with the first paint.
+        loading="lazy"
+        decoding="async"
+        width={160}
+        height={160}
         className={cn(
           'size-12 shrink-0 rounded-[4px] border border-line bg-white object-contain',
           className,

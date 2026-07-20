@@ -155,7 +155,7 @@ export default function TopNav() {
       onClick={() => navigate('/')}
       className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground"
     >
-      <img src={`${BASE}dp.png`} alt="Faisal Amin" className="size-6 rounded-full bg-brand object-cover" />
+      <img src={`${BASE}dp.webp`} alt="Faisal Amin" className="size-6 rounded-full bg-brand object-cover" />
       <span className="text-[10px] leading-none sm:text-[12px]">Me</span>
     </button>
   )

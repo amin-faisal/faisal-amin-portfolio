@@ -71,7 +71,7 @@ export function MessagingPanel() {
 
   const avatar = (
     <span className="relative shrink-0">
-      <img src={`${BASE}dp.png`} alt="" className="size-9 rounded-full bg-brand object-cover" />
+      <img src={`${BASE}dp.webp`} alt="" className="size-9 rounded-full bg-brand object-cover" />
       <span className="absolute right-0 bottom-0 size-2.5 rounded-full border-2 border-card bg-success" />
     </span>
   )

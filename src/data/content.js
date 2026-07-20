@@ -181,17 +181,17 @@ export const TABS = [
 
 // Files in /public — keys are matched case-insensitively against names.
 export const LOGOS = {
-  Modalys: 'Modalys.png',
-  'Natural Heroes': 'Natural Heroes.png',
-  Clyro: 'Clyro.png',
-  truID: 'TruID.png',
-  OctiLearn: 'Octilearn.png',
-  ChipXprt: 'ChipXPRT.png',
-  Takhleeq: 'Takhleeq.png',
-  Face44: 'Face44.png',
-  NUST: 'NUST.png',
-  Uxcel: 'UXCEL.png',
-  Coursera: 'Coursera.png',
+  Modalys: 'Modalys.webp',
+  'Natural Heroes': 'Natural Heroes.webp',
+  Clyro: 'Clyro.webp',
+  truID: 'TruID.webp',
+  OctiLearn: 'Octilearn.webp',
+  ChipXprt: 'ChipXPRT.webp',
+  Takhleeq: 'Takhleeq.webp',
+  Face44: 'Face44.webp',
+  NUST: 'NUST.webp',
+  Uxcel: 'UXCEL.webp',
+  Coursera: 'Coursera.webp',
 }
 
 export const RESUME = 'Faisal Amin Resume.pdf'

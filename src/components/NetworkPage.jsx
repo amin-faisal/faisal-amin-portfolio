@@ -89,7 +89,7 @@ function MetaLine({ meta, metaIcon }) {
   return (
     <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
       {metaIcon === 'school' ? (
-        <img src={`${BASE}NUST.png`} alt="" className="size-4 rounded-[2px] object-contain" />
+        <img src={`${BASE}NUST.webp`} alt="" className="size-4 rounded-[2px] object-contain" />
       ) : metaIcon ? (
         <span className="flex size-4 items-center justify-center rounded-full bg-brand text-[9px] font-bold text-ink">
           {metaIcon.charAt(0)}
