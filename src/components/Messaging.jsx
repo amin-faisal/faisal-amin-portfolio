@@ -1,7 +1,8 @@
 import { createContext, useContext, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronUp, X, Check, SendHorizontal } from 'lucide-react'
+import { ChevronUp, Check, SendHorizontal } from 'lucide-react'
 import Button from './ui/button.jsx'
+import ModalShell from './ModalShell.jsx'
 import { SITE, SERVICES } from '../data/content.js'
 
 const BASE = import.meta.env.BASE_URL
@@ -68,38 +69,26 @@ export function MessagingPanel() {
     }
   }
 
-  return (
-    <div className="fixed right-3 bottom-14 z-50 w-[300px] sm:right-6 sm:bottom-0 sm:w-[340px]">
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            key="panel"
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 40, opacity: 0 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="overflow-hidden rounded-t-lg border border-b-0 border-line bg-card shadow-[0_4px_24px_rgba(0,0,0,0.18)]"
-          >
-            <header className="flex items-center gap-2 border-b border-line p-3">
-              <span className="relative">
-                <img src={`${BASE}dp.png`} alt="" className="size-8 rounded-full bg-brand object-cover" />
-                <span className="absolute right-0 bottom-0 size-2.5 rounded-full border-2 border-card bg-success" />
-              </span>
-              <div className="leading-tight">
-                <p className="text-sm font-semibold">Message Faisal</p>
-                <p className="text-xs text-muted-foreground">Usually replies within a day</p>
-              </div>
-              <button
-                onClick={() => setOpen(false)}
-                aria-label="Close messaging"
-                className="ml-auto cursor-pointer rounded-full p-1.5 text-muted-foreground hover:bg-black/5"
-              >
-                <X className="size-4" />
-              </button>
-            </header>
+  const avatar = (
+    <span className="relative shrink-0">
+      <img src={`${BASE}dp.png`} alt="" className="size-9 rounded-full bg-brand object-cover" />
+      <span className="absolute right-0 bottom-0 size-2.5 rounded-full border-2 border-card bg-success" />
+    </span>
+  )
 
+  return (
+    <>
+      <AnimatePresence>
+        {open && (
+          <ModalShell
+            key="messaging"
+            title="Message Faisal"
+            subtitle="Usually replies within a day"
+            lead={avatar}
+            onClose={() => setOpen(false)}
+          >
             {status === 'sent' ? (
-              <div className="flex flex-col items-center gap-2 p-6 text-center">
+              <div className="flex flex-col items-center gap-2 py-6 text-center">
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -123,7 +112,7 @@ export function MessagingPanel() {
                 </Button>
               </div>
             ) : (
-              <form onSubmit={submit} className="flex flex-col gap-2.5 p-3">
+              <form onSubmit={submit} className="flex flex-col gap-2.5">
                 <input
                   required
                   value={form.name}
@@ -176,26 +165,29 @@ export function MessagingPanel() {
                 </div>
               </form>
             )}
-          </motion.div>
-        ) : (
+          </ModalShell>
+        )}
+      </AnimatePresence>
+
+      {/* Desktop-only launcher. On mobile the bottom tab bar owns Messaging, so
+          nothing hovers above the nav eating screen space. */}
+      <AnimatePresence>
+        {!open && (
           <motion.button
             key="dock"
-            initial={{ y: 40 }}
-            animate={{ y: 0 }}
-            exit={{ y: 40 }}
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 40, opacity: 0 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
             onClick={() => setOpen(true)}
-            className="flex w-full cursor-pointer items-center gap-2 rounded-t-lg border border-b-0 border-line bg-card px-3 py-2 shadow-[0_2px_12px_rgba(0,0,0,0.15)] hover:bg-black/[0.03]"
+            className="fixed right-6 bottom-0 z-40 hidden w-[340px] cursor-pointer items-center gap-2 rounded-t-lg border border-b-0 border-line bg-card px-3 py-2 shadow-[0_2px_12px_rgba(0,0,0,0.15)] hover:bg-black/[0.03] sm:flex"
           >
-            <span className="relative">
-              <img src={`${BASE}dp.png`} alt="" className="size-8 rounded-full bg-brand object-cover" />
-              <span className="absolute right-0 bottom-0 size-2.5 rounded-full border-2 border-card bg-success" />
-            </span>
+            {avatar}
             <span className="text-sm font-semibold">Messaging</span>
             <ChevronUp className="ml-auto size-4 text-muted-foreground" aria-hidden="true" />
           </motion.button>
         )}
       </AnimatePresence>
-    </div>
+    </>
   )
 }

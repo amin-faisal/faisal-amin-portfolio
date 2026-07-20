@@ -6,7 +6,6 @@ import {
   BriefcaseBusiness,
   MessagesSquare,
   Search,
-  ChevronDown,
   FileText,
   Wrench,
   Building2,
@@ -157,9 +156,7 @@ export default function TopNav() {
       className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground"
     >
       <img src={`${BASE}dp.png`} alt="Faisal Amin" className="size-6 rounded-full bg-brand object-cover" />
-      <span className="flex items-center text-[10px] leading-none sm:text-[12px]">
-        Me <ChevronDown className="size-3" aria-hidden="true" />
-      </span>
+      <span className="text-[10px] leading-none sm:text-[12px]">Me</span>
     </button>
   )
 

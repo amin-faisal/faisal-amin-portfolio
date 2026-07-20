@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import {
   BadgeCheck,
-  BriefcaseBusiness,
+  CalendarClock,
   Download,
   Globe,
   Mail,
   MapPin,
   SquareArrowOutUpRight,
-  X,
 } from 'lucide-react'
 import { Card } from './ui/card.jsx'
 import Button from './ui/button.jsx'
 import LogoTile from './LogoTile.jsx'
+import ModalShell from './ModalShell.jsx'
 import { LinkedinIcon } from './icons.jsx'
 import { useMessaging } from './Messaging.jsx'
 import { cn } from '../lib/utils.js'
@@ -25,6 +25,8 @@ import {
   CURRENT_COMPANY,
   EDUCATION_SHORT,
   OPEN_TO,
+  OPEN_TO_DETAILS,
+  OPEN_TO_START,
   RESUME,
   PUBLIC_URL,
 } from '../data/content.js'
@@ -65,45 +67,19 @@ function BannerFallback() {
   )
 }
 
-function ModalShell({ title, onClose, children, footer }) {
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.18, ease: 'easeOut' }}
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-label={title}
-        className="w-full max-w-md rounded-lg bg-card shadow-xl"
-      >
-        <header className="flex items-center justify-between border-b border-line px-5 py-4">
-          <h2 className="text-lg font-semibold">{title}</h2>
-          <button
-            onClick={onClose}
-            aria-label="Close"
-            className="cursor-pointer rounded-full p-1.5 text-muted-foreground hover:bg-black/5"
-          >
-            <X className="size-5" />
-          </button>
-        </header>
-        <div className="flex flex-col gap-4 px-5 py-4">{children}</div>
-        {footer && (
-          <footer className="flex justify-end gap-2 border-t border-line px-5 py-3">{footer}</footer>
-        )}
-      </motion.div>
-    </div>
-  )
-}
-
 function OpenToModal({ onClose }) {
   const { openMessaging } = useMessaging()
   return (
     <ModalShell
       title="Open to work"
+      subtitle={`${SITE.name} · ${SITE.location}`}
+      lead={
+        <img
+          src={`${BASE}dp.png`}
+          alt=""
+          className="size-10 shrink-0 rounded-full bg-brand object-cover ring-2 ring-success/60"
+        />
+      }
       onClose={onClose}
       footer={
         <>
@@ -122,18 +98,39 @@ function OpenToModal({ onClose }) {
         </>
       }
     >
-      {OPEN_TO.map((role) => (
-        <div key={role.title} className="flex items-center gap-3">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded bg-muted text-primary">
-            <BriefcaseBusiness className="size-5" aria-hidden="true" />
-          </span>
-          <div>
-            <p className="text-sm font-semibold">{role.title}</p>
-            <p className="text-sm text-muted-foreground">{role.type}</p>
-          </div>
+      {/* Availability banner */}
+      <div className="flex items-start gap-3 rounded-lg border border-success/25 bg-success/[0.07] p-3">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-success/15 text-success">
+          <CalendarClock className="size-[18px]" aria-hidden="true" />
+        </span>
+        <div>
+          <p className="text-sm font-semibold text-success">Available now</p>
+          <p className="text-sm leading-snug text-foreground/80">{OPEN_TO_START}</p>
         </div>
-      ))}
-      <p className="text-sm text-muted-foreground">
+      </div>
+
+      {/* What I'm open to */}
+      <dl className="mt-4 flex flex-col gap-4">
+        {OPEN_TO_DETAILS.map(({ label, values }) => (
+          <div key={label}>
+            <dt className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
+              {label}
+            </dt>
+            <dd className="mt-1.5 flex flex-wrap gap-1.5">
+              {values.map((v) => (
+                <span
+                  key={v}
+                  className="rounded-full border border-line bg-muted px-2.5 py-1 text-xs font-medium text-foreground/85"
+                >
+                  {v}
+                </span>
+              ))}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <p className="mt-4 border-t border-line pt-3 text-sm text-muted-foreground">
         The fastest way in is a message — it lands straight in my inbox.
       </p>
     </ModalShell>
@@ -149,29 +146,31 @@ const CONTACT_ROWS = [
 
 function ContactInfoModal({ onClose }) {
   return (
-    <ModalShell title={`${SITE.name} — Contact info`} onClose={onClose}>
-      {CONTACT_ROWS.map(({ icon: Icon, label, value, href }) => (
-        <div key={label} className="flex items-center gap-3">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded bg-muted text-primary">
-            <Icon className="size-5" aria-hidden="true" />
-          </span>
-          <div className="min-w-0">
-            <p className="text-sm font-semibold">{label}</p>
-            {href ? (
-              <a
-                href={href}
-                target={href.startsWith('mailto') ? undefined : '_blank'}
-                rel="noreferrer"
-                className="block truncate text-sm text-primary hover:underline"
-              >
-                {value}
-              </a>
-            ) : (
-              <p className="text-sm text-muted-foreground">{value}</p>
-            )}
+    <ModalShell title="Contact info" subtitle={SITE.name} onClose={onClose}>
+      <div className="flex flex-col gap-4">
+        {CONTACT_ROWS.map(({ icon: Icon, label, value, href }) => (
+          <div key={label} className="flex items-center gap-3">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded bg-muted text-primary">
+              <Icon className="size-5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold">{label}</p>
+              {href ? (
+                <a
+                  href={href}
+                  target={href.startsWith('mailto') ? undefined : '_blank'}
+                  rel="noreferrer"
+                  className="block truncate text-sm text-primary hover:underline"
+                >
+                  {value}
+                </a>
+              ) : (
+                <p className="text-sm text-muted-foreground">{value}</p>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </ModalShell>
   )
 }
@@ -217,25 +216,55 @@ export default function ProfileCard() {
             />
           </div>
 
-          <div className="hidden flex-col gap-3 pt-3 lg:flex">
+          {/* Right column — company, school and the numbers, so the desktop
+              profile doesn't trail off into empty space. */}
+          <div className="hidden w-[260px] shrink-0 flex-col gap-3 pt-3 md:flex">
             <a
               href={CURRENT_COMPANY.url}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 text-left text-sm font-semibold hover:underline"
+              className="flex items-center gap-2.5 rounded-lg p-1.5 text-left hover:bg-black/[0.04]"
             >
-              <LogoTile name={CURRENT_COMPANY.name} className="size-8" />
-              {CURRENT_COMPANY.name}
+              <LogoTile name={CURRENT_COMPANY.name} className="size-9 shrink-0" />
+              <span className="min-w-0">
+                <span className="block truncate text-sm font-semibold">{CURRENT_COMPANY.name}</span>
+                <span className="block truncate text-xs text-muted-foreground">
+                  Senior Product Designer
+                </span>
+              </span>
             </a>
             <a
               href={EDUCATION_SHORT.url}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 text-left text-sm font-semibold hover:underline"
+              className="flex items-center gap-2.5 rounded-lg p-1.5 text-left hover:bg-black/[0.04]"
             >
-              <LogoTile name={EDUCATION_SHORT.name} className="size-8" />
-              {EDUCATION_SHORT.name}
+              <LogoTile name={EDUCATION_SHORT.name} className="size-9 shrink-0" />
+              <span className="min-w-0">
+                <span className="block truncate text-sm font-semibold">{EDUCATION_SHORT.name}</span>
+                <span className="block truncate text-xs text-muted-foreground">
+                  {EDUCATION_SHORT.sub}
+                </span>
+              </span>
             </a>
+
+            <dl className="mt-1 grid grid-cols-3 divide-x divide-line rounded-lg border border-line bg-muted/60 py-2.5 text-center">
+              {STATS.map((s) => (
+                <div key={s.label} className="px-1">
+                  <dt className="sr-only">{s.label}</dt>
+                  <dd>
+                    <span className="block text-base font-bold tracking-tight">
+                      {s.prefix}
+                      {s.value}
+                      {s.suffix}
+                    </span>
+                    <span className="mt-0.5 block text-[10px] leading-tight text-muted-foreground">
+                      {s.label}
+                    </span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
 
@@ -279,7 +308,9 @@ export default function ProfileCard() {
               More
             </Button>
             {moreOpen && (
-              <div className="absolute top-full left-0 z-40 mt-1 w-60 overflow-hidden rounded-lg border border-line bg-card py-1 shadow-[0_4px_24px_rgba(0,0,0,0.15)]">
+              // Right-aligned on mobile so the menu can't run off-screen; LinkedIn's
+              // left-aligned drop is restored once there's room for it.
+              <div className="absolute top-full right-0 z-40 mt-1 w-60 overflow-hidden rounded-lg border border-line bg-card py-1 shadow-[0_4px_24px_rgba(0,0,0,0.15)] sm:right-auto sm:left-0">
                 <a
                   href={`${BASE}${RESUME}`}
                   download

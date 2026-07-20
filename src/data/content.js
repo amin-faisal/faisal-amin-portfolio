@@ -202,6 +202,25 @@ export const OPEN_TO = [
   { title: 'Web Design', type: 'Freelance projects' },
 ]
 
+// Detail rows for the "Open to work" dialog — mirrors LinkedIn's own panel.
+export const OPEN_TO_DETAILS = [
+  {
+    label: 'Job titles',
+    values: [
+      'Senior Product Designer',
+      'Product Designer',
+      'UX Designer',
+      'UI Designer',
+      'Senior UX Designer',
+    ],
+  },
+  { label: 'Location types', values: ['Remote', 'Hybrid', 'On-site'] },
+  { label: 'Locations', values: ['Islamabad, Pakistan', 'Remote — worldwide'] },
+  { label: 'Employment types', values: ['Full-time', 'Part-time', 'Freelance', 'Contract'] },
+]
+
+export const OPEN_TO_START = 'Immediately — actively taking on new work'
+
 // Case studies — one entry per project, rendered by CaseStudyPage at
 // /work/<slug>. Every study needs challenge / solution / outcome.
 export const CASE_STUDIES = [
