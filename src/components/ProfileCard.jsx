@@ -10,6 +10,7 @@ import {
   MapPin,
   SquareArrowOutUpRight,
 } from 'lucide-react'
+import posthog from 'posthog-js'
 import { Card } from './ui/card.jsx'
 import Button from './ui/button.jsx'
 import LogoTile from './LogoTile.jsx'
@@ -263,7 +264,7 @@ export default function ProfileCard() {
           <p className="mt-1.5 text-sm text-muted-foreground">
             {SITE.location} ·{' '}
             <button
-              onClick={() => setContactOpen(true)}
+              onClick={() => { setContactOpen(true); posthog.capture('contact_info_viewed') }}
               className="cursor-pointer font-semibold text-primary hover:underline"
             >
               Contact info
@@ -279,7 +280,7 @@ export default function ProfileCard() {
 
         {/* Actions */}
         <div className="mt-4 flex flex-wrap gap-2">
-          <Button size="sm" onClick={() => setOpenToOpen(true)}>
+          <Button size="sm" onClick={() => { setOpenToOpen(true); posthog.capture('open_to_work_viewed') }}>
             Open to
           </Button>
           <Button size="sm" variant="outline" onClick={() => openMessaging()}>
@@ -296,7 +297,7 @@ export default function ProfileCard() {
                 <a
                   href={`${BASE}${RESUME}`}
                   download
-                  onClick={() => setMoreOpen(false)}
+                  onClick={() => { setMoreOpen(false); posthog.capture('resume_downloaded') }}
                   className="flex items-center gap-2.5 px-3 py-2.5 text-sm font-semibold hover:bg-black/5"
                 >
                   <Download className="size-4 text-muted-foreground" aria-hidden="true" />
@@ -324,7 +325,7 @@ export default function ProfileCard() {
             {OPEN_TO.map((r) => r.title).join(' · ')}
           </p>
           <button
-            onClick={() => setOpenToOpen(true)}
+            onClick={() => { setOpenToOpen(true); posthog.capture('open_to_work_viewed') }}
             className="cursor-pointer text-sm font-semibold text-primary hover:underline"
           >
             See details

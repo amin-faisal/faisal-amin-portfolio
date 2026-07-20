@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, TrendingUp } from 'lucide-react'
+import posthog from 'posthog-js'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card.jsx'
 import Badge from '../ui/badge.jsx'
 import { PROJECTS } from '../../data/content.js'
@@ -31,7 +32,7 @@ export default function WorkTab() {
               </p>
               {p.caseStudy && (
                 <button
-                  onClick={() => navigate(`/work/${p.caseStudy}`)}
+                  onClick={() => { posthog.capture('project_clicked', { project: p.title, tag: p.tag }); navigate(`/work/${p.caseStudy}`) }}
                   className="mt-3 flex w-fit cursor-pointer items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                 >
                   Read case study <ArrowRight className="size-4" aria-hidden="true" />

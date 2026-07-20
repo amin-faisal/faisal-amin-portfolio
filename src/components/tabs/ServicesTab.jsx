@@ -1,4 +1,5 @@
 import { Check, SendHorizontal } from 'lucide-react'
+import posthog from 'posthog-js'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card.jsx'
 import Badge from '../ui/badge.jsx'
 import { useMessaging } from '../Messaging.jsx'
@@ -19,7 +20,7 @@ export default function ServicesTab() {
         {SERVICES.map((s) => (
           <button
             key={s.title}
-            onClick={() => openMessaging(s.title)}
+            onClick={() => { posthog.capture('service_clicked', { service: s.title }); openMessaging(s.title) }}
             className="cursor-pointer rounded-lg border border-line p-4 text-left transition-colors hover:border-primary hover:bg-primary/[0.03]"
           >
             <div className="flex items-center justify-between gap-2">

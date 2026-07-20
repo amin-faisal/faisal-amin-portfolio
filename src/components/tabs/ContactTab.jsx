@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, MapPin, Globe } from 'lucide-react'
+import posthog from 'posthog-js'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card.jsx'
 import Button from '../ui/button.jsx'
 import { LinkedinIcon } from '../icons.jsx'
@@ -21,6 +22,7 @@ export default function ContactTab() {
     setWaved(true)
     clearTimeout(waveTimer.current)
     waveTimer.current = setTimeout(() => setWaved(false), 3500)
+    posthog.capture('say_hello_clicked')
   }
 
   return (
@@ -45,6 +47,10 @@ export default function ContactTab() {
                     href={href}
                     target={href.startsWith('mailto') ? undefined : '_blank'}
                     rel="noreferrer"
+                    onClick={() => {
+                      if (label === 'LinkedIn') posthog.capture('linkedin_clicked')
+                      else if (label === 'Email') posthog.capture('email_clicked')
+                    }}
                     className="block truncate text-sm text-primary hover:underline"
                   >
                     {value}

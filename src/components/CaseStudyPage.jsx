@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Check, CircleAlert, TrendingUp } from 'lucide-react'
+import posthog from 'posthog-js'
 import { Card, CardContent } from './ui/card.jsx'
 import Button from './ui/button.jsx'
 import Badge from './ui/badge.jsx'
@@ -38,6 +39,7 @@ export default function CaseStudyPage({ slug }) {
 
   useEffect(() => {
     if (!cs) navigate('/work', { replace: true })
+    else posthog.capture('case_study_viewed', { project: cs.project, tag: cs.tag })
   }, [cs, navigate])
 
   if (!cs) return null
@@ -157,7 +159,7 @@ export default function CaseStudyPage({ slug }) {
               </p>
             </div>
             <div className="flex gap-2">
-              <Button size="sm" onClick={() => openMessaging()}>
+              <Button size="sm" onClick={() => { posthog.capture('case_study_cta_clicked', { project: cs.project }); openMessaging() }}>
                 Message Faisal
               </Button>
               <Button size="sm" variant="outline" onClick={() => navigate('/work')}>

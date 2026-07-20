@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronUp, Check, SendHorizontal } from 'lucide-react'
+import posthog from 'posthog-js'
 import Button from './ui/button.jsx'
 import ModalShell from './ModalShell.jsx'
 import { SITE, SERVICES } from '../data/content.js'
@@ -27,6 +28,7 @@ export function MessagingProvider({ children }) {
   const openMessaging = (preselectedTopic) => {
     if (preselectedTopic && TOPICS.includes(preselectedTopic)) setTopic(preselectedTopic)
     setOpen(true)
+    posthog.capture('messaging_opened', { topic: preselectedTopic ?? TOPICS[0] })
   }
 
   return (
@@ -63,9 +65,16 @@ export function MessagingPanel() {
           _captcha: 'false',
         }),
       })
-      setStatus(res.ok ? 'sent' : 'error')
+      if (res.ok) {
+        setStatus('sent')
+        posthog.capture('message_sent', { topic })
+      } else {
+        setStatus('error')
+        posthog.capture('message_send_failed', { topic })
+      }
     } catch {
       setStatus('error')
+      posthog.capture('message_send_failed', { topic })
     }
   }
 
