@@ -7,6 +7,7 @@ import RightRail from './components/RightRail.jsx'
 import NetworkPage from './components/NetworkPage.jsx'
 import CaseStudyPage from './components/CaseStudyPage.jsx'
 import { MessagingProvider, MessagingPanel } from './components/Messaging.jsx'
+import { capturePageview } from './lib/analytics.js'
 import AboutTab from './components/tabs/AboutTab.jsx'
 import WorkTab from './components/tabs/WorkTab.jsx'
 import ServicesTab from './components/tabs/ServicesTab.jsx'
@@ -56,6 +57,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
+    capturePageview(pathname)
   }, [pathname])
 
   return (

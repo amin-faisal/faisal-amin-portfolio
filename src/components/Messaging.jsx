@@ -112,7 +112,8 @@ export function MessagingPanel() {
                 </Button>
               </div>
             ) : (
-              <form onSubmit={submit} className="flex flex-col gap-2.5">
+              // ph-no-capture keeps anything typed here out of analytics.
+              <form onSubmit={submit} className="ph-no-capture flex flex-col gap-2.5">
                 <input
                   required
                   value={form.name}
