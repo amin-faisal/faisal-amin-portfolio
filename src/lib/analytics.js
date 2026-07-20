@@ -12,8 +12,14 @@ let instance = null
 
 // Defer to after first paint, when the main thread is free. Importing at module
 // scope put this chunk on the critical path and delayed the largest paint.
+// requestIdleCallback must be called on window — pulling the reference out and
+// invoking it bare throws "Illegal invocation". The timeout guarantees it fires
+// even if the main thread never goes idle.
 const whenIdle = (fn) => {
-  const run = () => (window.requestIdleCallback ?? ((cb) => setTimeout(cb, 200)))(fn)
+  const run = () =>
+    typeof window.requestIdleCallback === 'function'
+      ? window.requestIdleCallback(fn, { timeout: 3000 })
+      : setTimeout(fn, 200)
   if (document.readyState === 'complete') run()
   else window.addEventListener('load', run, { once: true })
 }
@@ -50,7 +56,12 @@ const ready = !import.meta.env.PROD ? null : (async () => {
 
   instance = posthog
   return posthog
-})()
+})().catch((err) => {
+  // Analytics must never take the page down with it, but don't swallow it
+  // silently either — a quiet failure here is why this shipped broken once.
+  console.warn('[analytics] disabled:', err)
+  return null
+})
 
 export function initAnalytics() {
   return ready
@@ -61,5 +72,6 @@ export function initAnalytics() {
 export async function capturePageview(path) {
   if (!ready) return
   const posthog = instance ?? (await ready)
+  if (!posthog) return
   posthog.capture('$pageview', { $current_url: window.location.origin + path })
 }
