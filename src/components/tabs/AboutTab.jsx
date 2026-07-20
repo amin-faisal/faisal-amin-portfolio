@@ -1,9 +1,16 @@
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Eye, Layers, TrendingUp, Users } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card.jsx'
 import Badge from '../ui/badge.jsx'
 import LogoTile from '../LogoTile.jsx'
-import { ABOUT, PROJECTS, EXPERIENCE, EDUCATION, SKILLS, TOOLS } from '../../data/content.js'
+import { ABOUT, STATS, PROJECTS, EXPERIENCE, EDUCATION, SKILLS, TOOLS } from '../../data/content.js'
+
+// LinkedIn's Analytics block, with real career numbers in place of profile views.
+const STAT_ICONS = {
+  'Active users': Users,
+  'Shipped projects': Layers,
+  MARR: TrendingUp,
+}
 
 function ShowAll({ label, path }) {
   const navigate = useNavigate()
@@ -31,6 +38,37 @@ export default function AboutTab() {
             </p>
           ))}
         </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Analytics</CardTitle>
+          <p className="mt-0.5 flex items-center gap-1.5 text-sm text-muted-foreground">
+            <Eye className="size-4" aria-hidden="true" />
+            Visible to everyone
+          </p>
+        </CardHeader>
+        <CardContent className="grid gap-5 sm:grid-cols-3 sm:gap-6">
+          {STATS.map((s) => {
+            const Icon = STAT_ICONS[s.label] ?? TrendingUp
+            return (
+              <div key={s.label} className="flex gap-3">
+                <Icon className="mt-0.5 size-5 shrink-0 text-muted-foreground" aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-semibold">
+                    {s.prefix}
+                    {s.value}
+                    {s.suffix} {s.label}
+                  </p>
+                  <p className="mt-0.5 text-sm leading-snug text-muted-foreground">{s.sub}</p>
+                </div>
+              </div>
+            )
+          })}
+        </CardContent>
+        <CardFooter>
+          <ShowAll label="Show all" path="/work" />
+        </CardFooter>
       </Card>
 
       <Card>

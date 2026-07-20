@@ -247,24 +247,6 @@ export default function ProfileCard() {
                 </span>
               </span>
             </a>
-
-            <dl className="mt-1 grid grid-cols-3 divide-x divide-line rounded-lg border border-line bg-muted/60 py-2.5 text-center">
-              {STATS.map((s) => (
-                <div key={s.label} className="px-1">
-                  <dt className="sr-only">{s.label}</dt>
-                  <dd>
-                    <span className="block text-base font-bold tracking-tight">
-                      {s.prefix}
-                      {s.value}
-                      {s.suffix}
-                    </span>
-                    <span className="mt-0.5 block text-[10px] leading-tight text-muted-foreground">
-                      {s.label}
-                    </span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </div>
 
