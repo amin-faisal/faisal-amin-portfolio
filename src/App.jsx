@@ -1,18 +1,25 @@
-import { useEffect } from 'react'
+import { Suspense, lazy, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import TopNav from './components/TopNav.jsx'
-import ProfileCard from './components/ProfileCard.jsx'
+import ProfileCard, { TAB_STRIP_ID } from './components/ProfileCard.jsx'
 import RightRail from './components/RightRail.jsx'
-import NetworkPage from './components/NetworkPage.jsx'
-import CaseStudyPage from './components/CaseStudyPage.jsx'
 import { MessagingProvider, MessagingPanel } from './components/Messaging.jsx'
+import { PageSkeleton } from './components/Skeleton.jsx'
 import { capturePageview } from './lib/analytics.js'
+import usePageTitle from './lib/usePageTitle.js'
+import { TAB_PATHS } from './lib/nav.js'
 import AboutTab from './components/tabs/AboutTab.jsx'
 import WorkTab from './components/tabs/WorkTab.jsx'
 import ServicesTab from './components/tabs/ServicesTab.jsx'
 import ContactTab from './components/tabs/ContactTab.jsx'
 import { TABS } from './data/content.js'
+
+// Secondary pages load as their own chunks so the profile — the page almost
+// everyone lands on — isn't waiting on code it may never need.
+const NetworkPage = lazy(() => import('./components/NetworkPage.jsx'))
+const CaseStudyPage = lazy(() => import('./components/CaseStudyPage.jsx'))
+const AnalyticsPage = lazy(() => import('./components/AnalyticsPage.jsx'))
 
 const TAB_CONTENT = {
   about: AboutTab,
@@ -20,6 +27,8 @@ const TAB_CONTENT = {
   services: ServicesTab,
   contact: ContactTab,
 }
+
+const HEADER_H = 52
 
 function ProfilePage() {
   const { pathname } = useLocation()
@@ -51,25 +60,45 @@ function ProfilePage() {
 
 export default function App() {
   const { pathname } = useLocation()
+  const previous = useRef(null)
   const caseSlug = pathname.startsWith('/work/')
     ? pathname.slice('/work/'.length).replace(/\/+$/, '')
     : null
 
+  usePageTitle(pathname)
+
   useEffect(() => {
-    window.scrollTo(0, 0)
+    const from = previous.current
+    previous.current = pathname
+    const betweenTabs = from !== null && TAB_PATHS.has(from) && TAB_PATHS.has(pathname)
+
+    if (!betweenTabs) {
+      // A different page entirely — start it from the top.
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    } else {
+      // Switching profile tabs keeps the reader where they are. The only
+      // correction is when the tab strip has scrolled off the top: pull it
+      // back under the header so the new tab's content starts in view.
+      const strip = document.getElementById(TAB_STRIP_ID)
+      const top = strip?.getBoundingClientRect().top
+      if (top !== undefined && top < HEADER_H) {
+        window.scrollTo({ top: window.scrollY + top - HEADER_H, behavior: 'instant' })
+      }
+    }
+
     capturePageview(pathname)
   }, [pathname])
+
+  let page
+  if (pathname === '/network') page = <NetworkPage />
+  else if (pathname === '/analytics') page = <AnalyticsPage />
+  else if (caseSlug) page = <CaseStudyPage slug={caseSlug} />
+  else page = <ProfilePage />
 
   return (
     <MessagingProvider>
       <TopNav />
-      {pathname === '/network' ? (
-        <NetworkPage />
-      ) : caseSlug ? (
-        <CaseStudyPage slug={caseSlug} />
-      ) : (
-        <ProfilePage />
-      )}
+      <Suspense fallback={<PageSkeleton />}>{page}</Suspense>
       <MessagingPanel />
     </MessagingProvider>
   )

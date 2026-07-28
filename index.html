@@ -5,7 +5,7 @@
     <link rel="icon" type="image/png" href="./favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Faisal Amin — Senior Product Designer for your next big idea. Founding designer that talks shipping." />
-    <title>Faisal Amin® — Senior Product Designer</title>
+    <title>Faisal Amin: About | Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!--
@@ -36,9 +36,67 @@
         }
       })();
     </script>
+    <!--
+      Boot skeleton. It paints as soon as the HTML lands, so the gap while the
+      JS bundle downloads shows the shape of the profile instead of a blank
+      page. Self-contained CSS — it must not wait on the Tailwind stylesheet.
+      React clears #root when it mounts, taking all of this with it.
+    -->
+    <style>
+      body { margin: 0; background: #f4f2ee; }
+      #boot { font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; }
+      #boot .bar { height: 52px; background: #fff; border-bottom: 1px solid #e8e6e3; }
+      #boot .wrap { max-width: 1128px; margin: 0 auto; padding: 24px 16px; display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); }
+      @media (min-width: 1024px) { #boot .wrap { grid-template-columns: minmax(0, 1fr) 300px; } }
+      #boot .card { background: #fff; border: 1px solid #e8e6e3; border-radius: 8px; overflow: hidden; }
+      #boot .banner { aspect-ratio: 1584 / 396; background: #c9b0f1; }
+      #boot .pad { padding: 16px 24px 24px; }
+      #boot .avatar { width: 144px; height: 144px; border-radius: 50%; background: #e9e5f7; border: 6px solid #fff; margin-top: -76px; }
+      #boot .ln { height: 12px; border-radius: 4px; background: rgba(25, 25, 25, 0.08); margin-top: 12px; }
+      #boot .sk { background: rgba(25, 25, 25, 0.08); border-radius: 4px; }
+      #boot .pulse { animation: bootPulse 1.4s ease-in-out infinite; }
+      @keyframes bootPulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.45 } }
+      #boot .rail { display: none; }
+      @media (min-width: 1024px) { #boot .rail { display: block; } }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="boot" aria-busy="true" aria-label="Loading profile">
+        <div class="bar"></div>
+        <div class="wrap">
+          <div>
+            <div class="card">
+              <div class="banner"></div>
+              <div class="pad">
+                <div class="avatar pulse"></div>
+                <div class="ln pulse" style="width: 220px; height: 24px"></div>
+                <div class="ln pulse" style="width: 70%"></div>
+                <div class="ln pulse" style="width: 40%"></div>
+                <div class="ln pulse" style="width: 30%"></div>
+              </div>
+            </div>
+            <div class="card" style="margin-top: 24px">
+              <div class="pad" style="padding-top: 24px">
+                <div class="sk pulse" style="width: 120px; height: 18px"></div>
+                <div class="ln pulse"></div>
+                <div class="ln pulse"></div>
+                <div class="ln pulse" style="width: 60%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="rail">
+            <div class="card">
+              <div class="pad" style="padding-top: 24px">
+                <div class="sk pulse" style="width: 140px; height: 16px"></div>
+                <div class="ln pulse"></div>
+                <div class="ln pulse" style="width: 70%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

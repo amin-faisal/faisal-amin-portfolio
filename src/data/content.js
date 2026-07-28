@@ -16,55 +16,45 @@ export const CLIENTS = [
   'Modalys', 'Natural Heroes', 'Clyro', 'truID', 'OctiLearn', 'ChipXprt', 'Takhleeq', 'Face44',
 ]
 
+// The four flagship projects. `caseStudy` points at a CASE_STUDIES slug;
+// `status: 'wip'` renders as "Coming soon" instead of a readable study.
 export const PROJECTS = [
   {
     title: 'Modalys',
     year: '2026',
-    tag: 'Healthcare SaaS',
-    desc: 'End-to-end design of an occupational healthcare platform — research, IA and design system across 4 core modules.',
-    result: 'Fragmented workflows → one scalable platform',
-    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
+    tag: 'Occupational Healthcare',
+    desc: 'Rebuilding a UK occupational health platform end to end — 4 clinical modules, two very different audiences, one design system.',
+    result: '500+ organisations · 60K+ people covered',
+    img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop',
     caseStudy: 'modalys',
   },
   {
-    title: 'OctiLearn',
+    title: 'truID',
     year: '2025',
-    tag: 'EdTech Platform',
-    desc: 'E-learning platform for IGCSE & O/A-Level students. My first live product — shipped through research-driven onboarding and feature design.',
-    result: '3,000+ pre-launch sign-ups · sign-up flow 8 → 2 steps',
-    img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop',
+    tag: 'Biometric Identity',
+    desc: 'Identity verification used by banks and telcos — touchless fingerprint, face liveness and document checks in a single flow.',
+    result: '2.6M+ verifications at one bank · under 30s per check',
+    img: 'https://images.unsplash.com/photo-1633265486064-086b219458ec?q=80&w=1200&auto=format&fit=crop',
+    caseStudy: 'truid',
   },
   {
-    title: 'Alpherra',
+    title: 'Natural Heroes',
     year: '2025',
-    tag: 'AI × Engineering',
-    desc: 'AI solution integrated into SolidWorks that reads CAD drawings and runs feasibility tests on them automatically.',
-    result: 'Up to 93% AI accuracy',
-    img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop',
+    tag: 'E-commerce',
+    desc: 'Dutch DIY skincare brand selling raw natural ingredients — storefront and buying experience for a catalogue that keeps growing.',
+    result: '100K+ orders a year · €350K+ monthly revenue',
+    img: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1200&auto=format&fit=crop',
+    caseStudy: 'natural-heroes',
   },
   {
-    title: 'Crop.photo',
+    title: 'Peptides Farma',
     year: '2026',
-    tag: 'AI E-commerce',
-    desc: 'Marketing website and SaaS platform redesign for AI-powered product imagery, focused on clarity and conversion.',
-    result: 'Usability, layout & clarity overhaul',
-    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
-  },
-  {
-    title: 'Patient Portal',
-    year: '2024',
-    tag: 'Healthcare SaaS',
-    desc: 'Patient portal for medical history and checkups, plus an AI-powered nurse interface that transcribes voice notes into reports.',
-    result: '40% less manual data entry',
-    img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop',
-  },
-  {
-    title: 'Elements Learning',
-    year: '2024',
-    tag: 'EdTech E-commerce',
-    desc: 'EdTech e-commerce platform revolutionizing Pakistan’s education system, grown to 8+ product offerings.',
-    result: '1,000+ sales within 6 months of launch',
-    img: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop',
+    tag: 'Health & Science',
+    desc: 'A peptide supplier that needs to feel credible to clinicians and clear to newcomers. Currently in design.',
+    result: 'In design — case study coming soon',
+    img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop',
+    caseStudy: 'peptides-farma',
+    status: 'wip',
   },
 ]
 
@@ -222,55 +212,325 @@ export const OPEN_TO_DETAILS = [
 export const OPEN_TO_START = 'Immediately — actively taking on new work'
 
 // Case studies — one entry per project, rendered by CaseStudyPage at
-// /work/<slug>. Every study needs challenge / solution / outcome.
+// /work/<slug>. Every published study needs challenge / solution / outcome;
+// a study with `status: 'wip'` renders the coming-soon state instead.
 export const CASE_STUDIES = [
   {
     slug: 'modalys',
     project: 'Modalys',
-    tag: 'Healthcare SaaS',
-    title: 'Designing one platform for occupational healthcare',
+    tag: 'Occupational Healthcare',
+    title: 'One platform for occupational healthcare',
     subtitle:
-      'How fragmented HR and medical workflows became a single scalable SaaS — research, IA and a design system across 4 core modules.',
-    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop',
+      'Rebuilding a UK occupational health provider’s entire platform — four clinical modules, two opposing audiences, and 500+ organisations depending on it.',
+    img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1600&auto=format&fit=crop',
     published: 'July 2026',
-    readTime: '4 min read',
+    readTime: '5 min read',
     role: 'Senior Product Designer',
     timeline: 'Feb 2026 — Present',
     scope: ['UX Research', 'Information Architecture', 'Design System', 'High-fidelity UI'],
+    note: 'Under NDA, so the client is described generically and no product screens are shown.',
+    context: {
+      intro:
+        'Occupational healthcare sits between two worlds. Clinicians need clinical depth — case notes, immunisation records, surveillance schedules. Employers need administrative speed — send an employee, get a decision back. The existing platform served neither well, so the whole thing was rebuilt around four modules.',
+      modules: [
+        { name: 'Case Management', desc: 'Clinicians manage referrals and cases end to end.' },
+        { name: 'Pre-placement', desc: 'Fitness-for-work assessments before someone starts a role.' },
+        { name: 'Immunization', desc: 'Vaccination records, schedules and follow-ups.' },
+        { name: 'Health Surveillance', desc: 'Recurring statutory checks tied to workplace risk.' },
+      ],
+    },
     challenge: {
       intro:
-        'Occupational healthcare runs on fragmented tools: employee records live in one system, medical checkups in another, and compliance in spreadsheets. Modalys set out to unify all of it — which handed design a set of hard problems at once.',
+        'A full platform rebuild for a live service — 500+ registered organisations and 60K+ people already inside it — meant the design had to absorb real clinical complexity without breaking the people using it daily.',
       points: [
-        'Four deeply interconnected modules with complex data relationships',
-        'Two very different audiences — medical professionals and HR admins — with different mental models',
-        'Dense, heavy data entry (organization structures, employee onboarding) that had to feel light',
-        'No existing design language to build on — everything from zero',
+        'Four deeply interconnected modules: a case can trigger surveillance, which depends on immunisation history',
+        'Two audiences with opposite mental models — clinicians think in patients, employers think in headcount',
+        'Four distinct employer-side roles (HR, line managers, recruitment, health & safety) with different permissions and needs',
+        'Dense statutory data entry that had to feel light enough for daily clinical use',
+        'Heavy manual coordination the business wanted automated, not merely digitised',
       ],
     },
     solution: {
       intro:
-        'I functioned as the founding designer: starting where the product actually lives, then turning research into structure and structure into shippable UI.',
+        'I work as the founding designer on this: research and IA first, then a system that lets four modules behave like one product.',
       points: [
-        'Mapped real workflows with stakeholders and translated them into a clear information architecture across the 4 modules',
-        'Tamed dense forms with progressive disclosure and phased data input',
-        'Built a scalable design system — structured components and interaction patterns developers can actually ship',
-        'Designed and validated high-fidelity UI module by module, simplifying processes like organization structures and employee onboarding',
+        'Mapped the real clinical and employer workflows with stakeholders, then rebuilt the information architecture across all four modules',
+        'Separated the two audiences into distinct surfaces sharing one data model — clinicians get clinical depth, employers get a simple send-and-track flow',
+        'Split dense statutory forms into phased data entry with progressive disclosure, so nothing shows before it matters',
+        'Designed the automation surfaces — scheduling, recall and status handoffs that used to be chased by hand',
+        'Built the design system from scratch: structured components and interaction patterns developers can ship without redesigning',
       ],
     },
     outcome: {
       intro:
-        'Fragmented workflows became one scalable platform — with a design foundation that keeps up as Modalys grows.',
+        'Four fragmented workflows now behave like a single platform, with a design foundation built for the modules still to come.',
       metrics: [
-        { value: '4', label: 'core modules unified' },
-        { value: '1', label: 'platform replacing fragmented tools' },
-        { value: '0→1', label: 'design system from scratch' },
+        { value: '500+', label: 'organisations on the platform' },
+        { value: '60K+', label: 'people covered by it' },
+        { value: '4', label: 'modules unified' },
       ],
       points: [
-        'Organization structures and employee onboarding simplified end-to-end',
-        'Consistent patterns cut design–development friction',
-        'A foundation ready for the modules still to come',
+        'Clinicians manage organisations from one place instead of stitching tools together',
+        'Employer-side roles each get a surface that matches their job, not a generic admin panel',
+        'Manual coordination replaced by automated scheduling and status handoffs',
+        'A design system that keeps the next modules consistent by default',
       ],
     },
+  },
+  {
+    slug: 'truid',
+    project: 'truID',
+    tag: 'Biometric Identity',
+    title: 'Identity verification banks actually trust',
+    subtitle:
+      'A NUST spinoff replacing three hours of manual KYC with a sub-30-second biometric check — touchless fingerprint, face liveness and document authentication in one flow.',
+    img: 'https://images.unsplash.com/photo-1633265486064-086b219458ec?q=80&w=1600&auto=format&fit=crop',
+    published: 'July 2026',
+    readTime: '5 min read',
+    role: 'Product Designer',
+    timeline: '2024 — 2025',
+    scope: ['UX Research', 'Onboarding Flows', 'Enterprise Dashboards', 'Design System'],
+    context: {
+      intro:
+        'truID is a biometric identity platform used mainly by banks, plus telcos and government programs. It is the first indigenous touchless-fingerprint technology in Pakistan: biometric capture through an ordinary phone camera, with no scanner hardware at all. Design had to make something this technical feel unremarkable to the person being verified.',
+      modules: [
+        { name: 'Face Liveness', desc: 'Passive 3D anti-spoofing that rejects photo, video and mask attacks.' },
+        { name: 'Touchless Fingerprint', desc: 'Standards-compliant prints captured by a phone camera in 1–5 seconds.' },
+        { name: 'Document Authentication', desc: 'CNIC data extraction plus forgery and tamper detection.' },
+        { name: 'ID–Selfie Matching', desc: 'Confirms the person holding the ID is the person on it.' },
+      ],
+    },
+    challenge: {
+      intro:
+        'Manual onboarding was costing banks and telcos real money: around three hours per customer, roughly 40% of applicants abandoning the queue, and millions a year spent on the process. Regulation then made enhanced biometric KYC mandatory, so the replacement had to be fast, compliant and usable by anyone.',
+      points: [
+        'Biometric capture is unforgiving — lighting, framing and motion all decide whether a print is usable',
+        'Users had never done a touchless fingerprint scan before and had no mental model for it',
+        'Five verification steps had to feel like one continuous flow, not five separate hurdles',
+        'Failure is normal in biometrics; recovery had to be reassuring rather than accusatory',
+        'Bank-side operators needed verification results and audit trails they could defend to a regulator',
+      ],
+    },
+    solution: {
+      intro:
+        'The technology was already strong. My job was to keep human hesitation from wasting it — on both sides of the transaction.',
+      points: [
+        'Designed real-time capture guidance so the camera coaches hand position and framing while it scans, instead of failing after the fact',
+        'Turned five checks into one linear flow with honest progress, so people always knew how much was left',
+        'Wrote recovery states that explain what to change — light, distance, angle — and never blame the user',
+        'Designed the operator dashboard around confidence and evidence: result, accuracy, and the audit trail behind each decision',
+        'Kept one interaction system across face, fingerprint, document and selfie capture so each step teaches the next',
+      ],
+    },
+    outcome: {
+      intro:
+        'The platform now runs at production scale inside banking onboarding, with accuracy high enough to be defended to regulators.',
+      metrics: [
+        { value: '2.6M+', label: 'fingerprint verifications at one bank' },
+        { value: '<30s', label: 'average verification, down from ~3h' },
+        { value: '96.6%', label: 'fingerprint accuracy (99% liveness)' },
+      ],
+      points: [
+        '165K+ face-liveness verifications alongside the fingerprint volume at the same bank',
+        '91% first-attempt match against the national identity database',
+        'Zero scanner hardware required — any standard iOS or Android camera works, fully offline',
+        'Now positioned for African markets, where 350M+ users across six countries face mandatory identity verification',
+      ],
+    },
+  },
+  {
+    slug: 'natural-heroes',
+    project: 'Natural Heroes',
+    tag: 'E-commerce',
+    title: 'Selling ingredients, not just products',
+    subtitle:
+      'A Dutch DIY skincare brand with 9,500+ reviews and 100K+ orders a year — where every shopper is either a confident maker or completely lost.',
+    img: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1600&auto=format&fit=crop',
+    published: 'July 2026',
+    readTime: '4 min read',
+    role: 'Product Designer',
+    timeline: '2025',
+    scope: ['E-commerce UX', 'Navigation & IA', 'Conversion Design', 'Responsive UI'],
+    link: { label: 'naturalheroes.nl', url: 'https://www.naturalheroes.nl/' },
+    context: {
+      intro:
+        'Natural Heroes sells raw materials for making your own skin and hair care: oils, butters, clays, essential oils. Everything is natural, vegan, plastic-free and cruelty-free. The catch is that raw ingredients are not self-explanatory — a bottle of jojoba oil does not tell you what to do with it.',
+      modules: [
+        { name: 'Raw ingredients', desc: 'Oils, butters, clays and essential oils sold by the component.' },
+        { name: 'DIY recipes', desc: 'The knowledge layer that turns ingredients into something usable.' },
+        { name: 'Ready-made care', desc: 'Finished products for people who don’t want to mix anything.' },
+        { name: 'Packaging & tools', desc: 'The jars, bottles and equipment a maker needs.' },
+      ],
+    },
+    challenge: {
+      intro:
+        'The store serves two shoppers at once. Experienced makers know exactly which ingredient and volume they want and resent anything between them and checkout. Newcomers arrive curious, face a wall of unfamiliar ingredient names, and leave.',
+      points: [
+        'A large, growing catalogue of ingredients that look interchangeable to a beginner',
+        'Buying decisions depend on knowledge the product page has to carry — purpose, skin type, how to combine',
+        'Repeat customers reorder specific volumes and need the shortest possible path',
+        'Sustainability and ingredient sourcing are the actual reason people choose the brand, and had to stay visible without becoming a lecture',
+        'Most traffic is mobile, where dense product information falls apart fastest',
+      ],
+    },
+    solution: {
+      intro:
+        'I designed for both shoppers in the same storefront, rather than optimising for one and losing the other.',
+      points: [
+        'Restructured navigation around intent — what you want to make — alongside the traditional ingredient categories',
+        'Rebuilt product pages so purpose comes before specification: what this ingredient is for, then the detail',
+        'Tied recipes and ingredients together in both directions, so browsing knowledge leads to a basket and a basket leads to guidance',
+        'Compressed the reorder path for returning customers who already know their volume',
+        'Made social proof carry weight — 9,500+ reviews are the brand’s strongest argument, so they sit where hesitation actually happens',
+      ],
+    },
+    outcome: {
+      intro:
+        'A storefront that behaves like a specialist shop with a knowledgeable assistant, at a volume that keeps growing.',
+      metrics: [
+        { value: '100K+', label: 'orders per year' },
+        { value: '€350K+', label: 'revenue per month' },
+        { value: '9.5K+', label: 'customer reviews' },
+      ],
+      points: [
+        'Beginners can start from an intention instead of an ingredient name',
+        'Repeat makers reach checkout in fewer steps',
+        'Ingredient knowledge and commerce reinforce each other instead of competing',
+        'The system holds up as the catalogue expands',
+      ],
+    },
+  },
+  {
+    slug: 'peptides-farma',
+    project: 'Peptides Farma',
+    tag: 'Health & Science',
+    status: 'wip',
+    title: 'Peptides Farma — in design',
+    subtitle:
+      'A peptide supplier that has to read as credible to clinicians and comprehensible to everyone else. Currently on my desk.',
+    img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop',
+    published: 'In progress',
+    readTime: 'Coming soon',
+    role: 'Product Designer',
+    timeline: '2026 — in progress',
+    scope: ['Brand & Web Design', 'E-commerce UX', 'Content Strategy'],
+    comingSoon: {
+      intro:
+        'Peptides are a category where trust is the entire product. Buyers range from practitioners who know exactly what they need to people who have only read the word once — and the science has to be presented precisely without becoming unreadable.',
+      focus: [
+        'Establishing scientific credibility without drifting into medical claims',
+        'Making an unfamiliar, technical catalogue navigable',
+        'A product page that satisfies an expert and a first-timer with the same content',
+        'Compliance-aware copy and information design',
+      ],
+      note: 'The full case study lands once the work ships.',
+    },
+  },
+]
+
+// Analytics — LinkedIn's Analytics section, told per project. `id: 'all'` is
+// the combined view; every other id matches a PROJECTS entry.
+export const ANALYTICS = [
+  {
+    id: 'all',
+    label: 'All projects',
+    logo: null,
+    tag: 'Combined',
+    headline: 'Everything, added up',
+    intro:
+      'Four flagship projects across occupational healthcare, biometric identity, e-commerce and health science — plus 12+ shipped products before them.',
+    metrics: [
+      { value: '100K+', label: 'Active users', sub: 'across the products I have designed', trend: 'up' },
+      { value: '12+', label: 'Shipped projects', sub: 'taken from zero to launch', trend: 'up' },
+      { value: '$500K+', label: 'MARR influenced', sub: 'monthly annual recurring revenue', trend: 'up' },
+      { value: '3+', label: 'Years designing', sub: 'scalable, accessible interfaces', trend: 'flat' },
+    ],
+    highlights: [
+      { label: 'Modalys', value: '500+ organisations · 60K+ people covered' },
+      { label: 'truID', value: '2.6M+ verifications · under 30s per check' },
+      { label: 'Natural Heroes', value: '100K+ orders a year · €350K+ per month' },
+      { label: 'Peptides Farma', value: 'In design — numbers to come' },
+    ],
+  },
+  {
+    id: 'modalys',
+    label: 'Modalys',
+    logo: 'Modalys',
+    tag: 'Occupational Healthcare',
+    headline: 'Modalys performance',
+    intro:
+      'A UK occupational health platform rebuilt across four clinical modules, serving clinicians on one side and employers on the other.',
+    metrics: [
+      { value: '500+', label: 'Organisations', sub: 'registered on the platform', trend: 'up' },
+      { value: '60K+', label: 'People covered', sub: 'employees inside those organisations', trend: 'up' },
+      { value: '4', label: 'Core modules', sub: 'case management, pre-placement, immunization, surveillance', trend: 'flat' },
+      { value: '5', label: 'User roles designed for', sub: 'clinicians plus HR, line managers, recruitment, H&S', trend: 'flat' },
+    ],
+    highlights: [
+      { label: 'Design system', value: 'Built from scratch — 0 → 1' },
+      { label: 'Audiences', value: 'Clinical depth and employer speed on one data model' },
+      { label: 'Automation', value: 'Scheduling, recall and status handoffs replacing manual chasing' },
+      { label: 'Status', value: 'Live and expanding — more modules in the pipeline' },
+    ],
+  },
+  {
+    id: 'truid',
+    label: 'truID',
+    logo: 'truID',
+    tag: 'Biometric Identity',
+    headline: 'truID performance',
+    intro:
+      'Biometric verification running inside real banking onboarding — the first indigenous touchless fingerprint technology in Pakistan.',
+    metrics: [
+      { value: '2.6M', label: 'Fingerprint verifications', sub: 'at a single partner bank', trend: 'up' },
+      { value: '165K+', label: 'Face liveness checks', sub: 'at the same bank', trend: 'up' },
+      { value: '96.6%', label: 'Fingerprint accuracy', sub: '99% on liveness detection', trend: 'up' },
+      { value: '<30s', label: 'Verification time', sub: 'down from roughly 3 hours manual', trend: 'up' },
+    ],
+    highlights: [
+      { label: 'First-attempt match', value: '91% against the national identity database' },
+      { label: 'Hardware needed', value: 'None — any standard phone camera, fully offline' },
+      { label: 'Document checks', value: '95% OCR accuracy · 93% forgery detection' },
+      { label: 'Next market', value: '350M+ users across six African countries' },
+    ],
+  },
+  {
+    id: 'natural-heroes',
+    label: 'Natural Heroes',
+    logo: 'Natural Heroes',
+    tag: 'E-commerce',
+    headline: 'Natural Heroes performance',
+    intro:
+      'A Dutch DIY skin and hair care brand selling raw natural ingredients — 100% natural, vegan, plastic-free and cruelty-free.',
+    metrics: [
+      { value: '100K+', label: 'Orders per year', sub: 'through the storefront', trend: 'up' },
+      { value: '€350K+', label: 'Revenue per month', sub: 'from the online business', trend: 'up' },
+      { value: '9.5K+', label: 'Customer reviews', sub: 'the brand’s strongest argument', trend: 'up' },
+      { value: '4', label: 'Catalogue pillars', sub: 'ingredients, recipes, ready-made, packaging', trend: 'flat' },
+    ],
+    highlights: [
+      { label: 'Two shoppers', value: 'Experienced makers and complete beginners, one storefront' },
+      { label: 'Navigation', value: 'Restructured around intent, not just ingredient names' },
+      { label: 'Knowledge layer', value: 'Recipes and ingredients linked in both directions' },
+      { label: 'Primary device', value: 'Mobile-first — where dense product info breaks first' },
+    ],
+  },
+  {
+    id: 'peptides-farma',
+    label: 'Peptides Farma',
+    logo: null,
+    tag: 'Health & Science',
+    status: 'wip',
+    headline: 'Peptides Farma',
+    intro:
+      'A peptide supplier currently in design. Numbers arrive once it ships — here is what the work is aiming at.',
+    metrics: [],
+    highlights: [
+      { label: 'Category', value: 'Peptides — where trust is the whole product' },
+      { label: 'Audience', value: 'Practitioners and curious first-timers, same page' },
+      { label: 'Design focus', value: 'Scientific credibility without medical claims' },
+      { label: 'Status', value: 'In design — launching 2026' },
+    ],
   },
 ]
 
@@ -368,7 +628,7 @@ export const EDUCATION_SHORT = {
 export const ABOUT = [
   "I'm a mechanical engineer (NUST '24) who fell for product design and never looked back. Three-plus years later, my work runs in front of 100K+ active users across healthcare, edtech, AI and e-commerce — 12+ shipped projects generating $500K+ in MARR.",
   "I function as a founding designer that talks shipping: research, information architecture, design systems, high-fidelity UI, and the awkward middle bits between design and engineering. Right now I'm at Modalys, leading end-to-end design of an occupational healthcare SaaS across 4 core modules.",
-  'Before that: 50+ SaaS platforms at Clyro, an AI that reads CAD drawings at 93% accuracy, an e-learning platform with 3,000+ pre-launch sign-ups, and an AI nurse interface that cut manual data entry by 40%. In short — a designer who gives a shit.',
+  'Before that: 50+ SaaS platforms at Clyro, biometric identity verification running 2.6M+ checks inside a bank, an e-learning platform with 3,000+ pre-launch sign-ups, and an AI nurse interface that cut manual data entry by 40%. In short — a designer who gives a shit.',
 ]
 
 export const SKILLS = [

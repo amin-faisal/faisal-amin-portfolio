@@ -1,6 +1,17 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Check, CircleAlert, TrendingUp } from 'lucide-react'
+import {
+  ArrowLeft,
+  ArrowRight,
+  BarChart3,
+  Check,
+  CircleAlert,
+  Clock3,
+  Layers,
+  Lock,
+  SquareArrowOutUpRight,
+  TrendingUp,
+} from 'lucide-react'
 import { Card, CardContent } from './ui/card.jsx'
 import Button from './ui/button.jsx'
 import Badge from './ui/badge.jsx'
@@ -42,25 +53,35 @@ export default function CaseStudyPage({ slug }) {
 
   if (!cs) return null
 
+  const wip = cs.status === 'wip'
   const otherProjects = PROJECTS.filter((p) => p.title !== cs.project).slice(0, 4)
 
   return (
     <main className="mx-auto grid max-w-[1128px] grid-cols-1 items-start gap-4 px-2 pt-4 pb-24 sm:gap-6 sm:px-4 sm:pt-6 sm:pb-12 lg:grid-cols-[minmax(0,1fr)_300px]">
       <div className="flex min-w-0 flex-col gap-4 sm:gap-6">
         <button
-          onClick={() => navigate('/work')}
+          onClick={() => navigate('/work', { replace: true })}
           className="flex w-fit cursor-pointer items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="size-4" aria-hidden="true" /> All projects
         </button>
 
         <Card className="overflow-hidden">
-          <img src={cs.img} alt={cs.project} className="aspect-[2/1] w-full object-cover" />
+          <img
+            src={cs.img}
+            alt={cs.project}
+            className={`aspect-[2/1] w-full object-cover ${wip ? 'opacity-75 grayscale' : ''}`}
+          />
           <CardContent>
             {/* Title block */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Badge variant="brand">{cs.tag}</Badge>
               <span className="text-sm text-muted-foreground">{cs.project}</span>
+              {wip && (
+                <span className="flex items-center gap-1 rounded bg-muted px-2 py-0.5 text-xs font-semibold text-muted-foreground">
+                  <Clock3 className="size-3.5" aria-hidden="true" /> Coming soon
+                </span>
+              )}
             </div>
             <h1 className="mt-2 text-2xl leading-tight font-semibold sm:text-3xl">{cs.title}</h1>
             <p className="mt-2 text-base text-muted-foreground">{cs.subtitle}</p>
@@ -81,6 +102,17 @@ export default function CaseStudyPage({ slug }) {
                   {cs.published} · {cs.readTime}
                 </p>
               </div>
+              {cs.link && (
+                <a
+                  href={cs.link.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ml-auto hidden shrink-0 items-center gap-1 text-sm font-semibold text-primary hover:underline sm:flex"
+                >
+                  {cs.link.label}
+                  <SquareArrowOutUpRight className="size-3.5" aria-hidden="true" />
+                </a>
+              )}
             </div>
 
             {/* Meta */}
@@ -103,47 +135,110 @@ export default function CaseStudyPage({ slug }) {
               </div>
             </div>
 
-            {/* The three pillars */}
-            <Section
-              title="The challenge"
-              icon={CircleAlert}
-              iconClass="text-[#b24020]"
-              intro={cs.challenge.intro}
-              points={cs.challenge.points}
-            />
-            <Section
-              title="The solution"
-              icon={Check}
-              iconClass="text-primary"
-              intro={cs.solution.intro}
-              points={cs.solution.points}
-            />
+            {cs.note && (
+              <p className="mt-4 flex items-start gap-2 rounded-lg bg-muted p-3 text-sm text-muted-foreground">
+                <Lock className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                {cs.note}
+              </p>
+            )}
 
-            <section className="mt-8">
-              <h2 className="flex items-center gap-2 text-xl font-semibold">
-                <TrendingUp className="size-5 text-success" aria-hidden="true" />
-                The outcome
-              </h2>
-              <p className="mt-3 text-[15px] leading-relaxed">{cs.outcome.intro}</p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                {cs.outcome.metrics.map((m) => (
-                  <div key={m.label} className="rounded-lg border border-line bg-muted/50 p-4">
-                    <p className="text-2xl font-bold text-success">{m.value}</p>
-                    <p className="mt-1 text-sm text-muted-foreground">{m.label}</p>
-                  </div>
-                ))}
-              </div>
-              {cs.outcome.points && (
-                <ul className="mt-4 flex flex-col gap-2">
-                  {cs.outcome.points.map((point) => (
-                    <li key={point} className="flex items-start gap-2 text-[15px] leading-relaxed">
-                      <Check className="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true" />
-                      {point}
+            {wip ? (
+              <section className="mt-8">
+                <h2 className="flex items-center gap-2 text-xl font-semibold">
+                  <Clock3 className="size-5 text-muted-foreground" aria-hidden="true" />
+                  What I'm designing
+                </h2>
+                <p className="mt-3 text-[15px] leading-relaxed">{cs.comingSoon.intro}</p>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {cs.comingSoon.focus.map((f) => (
+                    <li
+                      key={f}
+                      className="flex items-start gap-2 rounded-lg border border-line p-3 text-sm leading-relaxed"
+                    >
+                      <ArrowRight
+                        className="mt-0.5 size-4 shrink-0 text-muted-foreground"
+                        aria-hidden="true"
+                      />
+                      {f}
                     </li>
                   ))}
                 </ul>
-              )}
-            </section>
+                <p className="mt-4 text-sm text-muted-foreground">{cs.comingSoon.note}</p>
+              </section>
+            ) : (
+              <>
+                {cs.context && (
+                  <section className="mt-8">
+                    <h2 className="flex items-center gap-2 text-xl font-semibold">
+                      <Layers className="size-5 text-muted-foreground" aria-hidden="true" />
+                      The product
+                    </h2>
+                    <p className="mt-3 text-[15px] leading-relaxed">{cs.context.intro}</p>
+                    <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                      {cs.context.modules.map((m) => (
+                        <li key={m.name} className="rounded-lg border border-line p-3">
+                          <p className="text-sm font-semibold">{m.name}</p>
+                          <p className="mt-0.5 text-sm leading-snug text-muted-foreground">
+                            {m.desc}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                <Section
+                  title="The challenge"
+                  icon={CircleAlert}
+                  iconClass="text-[#b24020]"
+                  intro={cs.challenge.intro}
+                  points={cs.challenge.points}
+                />
+                <Section
+                  title="The solution"
+                  icon={Check}
+                  iconClass="text-primary"
+                  intro={cs.solution.intro}
+                  points={cs.solution.points}
+                />
+
+                <section className="mt-8">
+                  <h2 className="flex items-center gap-2 text-xl font-semibold">
+                    <TrendingUp className="size-5 text-success" aria-hidden="true" />
+                    The outcome
+                  </h2>
+                  <p className="mt-3 text-[15px] leading-relaxed">{cs.outcome.intro}</p>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                    {cs.outcome.metrics.map((m) => (
+                      <div key={m.label} className="rounded-lg border border-line bg-muted/50 p-4">
+                        <p className="text-2xl font-bold text-success">{m.value}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">{m.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                  {cs.outcome.points && (
+                    <ul className="mt-4 flex flex-col gap-2">
+                      {cs.outcome.points.map((point) => (
+                        <li
+                          key={point}
+                          className="flex items-start gap-2 text-[15px] leading-relaxed"
+                        >
+                          <Check className="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <button
+                    onClick={() => navigate(`/analytics?p=${cs.slug}`)}
+                    className="mt-4 flex cursor-pointer items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  >
+                    <BarChart3 className="size-4" aria-hidden="true" />
+                    See {cs.project} in analytics
+                  </button>
+                </section>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -160,7 +255,11 @@ export default function CaseStudyPage({ slug }) {
               <Button size="sm" onClick={() => openMessaging()}>
                 Message Faisal
               </Button>
-              <Button size="sm" variant="outline" onClick={() => navigate('/work')}>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => navigate('/work', { replace: true })}
+              >
                 More projects
               </Button>
             </div>
@@ -178,9 +277,7 @@ export default function CaseStudyPage({ slug }) {
               className="mx-auto size-16 rounded-full bg-brand object-cover"
             />
             <p className="mt-2 font-semibold">{SITE.name}</p>
-            <p className="text-sm text-muted-foreground">
-              {SITE.role} for your next big idea
-            </p>
+            <p className="text-sm text-muted-foreground">{SITE.role} for your next big idea</p>
             <Button size="sm" className="mt-3" onClick={() => openMessaging()}>
               Message
             </Button>

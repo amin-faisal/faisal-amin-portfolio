@@ -17,6 +17,22 @@
   --color-line: #e8e6e3;
 }
 
+/* Matches the boot skeleton's sweep in index.html, so the handover from the
+   static placeholder to React's own skeletons is seamless. */
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@utility animate-pulse-soft {
+  animation: pulse-soft 1.4s ease-in-out infinite;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

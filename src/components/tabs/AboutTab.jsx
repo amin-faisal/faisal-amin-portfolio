@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, Eye, Layers, TrendingUp, Users } from 'lucide-react'
+import { navOptions } from '../../lib/nav.js'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card.jsx'
 import Badge from '../ui/badge.jsx'
 import LogoTile from '../LogoTile.jsx'
@@ -16,7 +17,7 @@ function ShowAll({ label, path }) {
   const navigate = useNavigate()
   return (
     <button
-      onClick={() => navigate(path)}
+      onClick={() => navigate(path, navOptions(path))}
       className="flex w-full cursor-pointer items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-black/5 hover:text-foreground"
     >
       {label} <ArrowRight className="size-4" aria-hidden="true" />
@@ -67,7 +68,7 @@ export default function AboutTab() {
           })}
         </CardContent>
         <CardFooter>
-          <ShowAll label="Show all" path="/work" />
+          <ShowAll label="Show all analytics" path="/analytics" />
         </CardFooter>
       </Card>
 

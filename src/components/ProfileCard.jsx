@@ -33,6 +33,9 @@ import {
 
 const BASE = import.meta.env.BASE_URL
 
+// App measures this strip to keep tab content in view when tabs are switched.
+export const TAB_STRIP_ID = 'profile-tabs'
+
 // CSS recreation of the purple banner — shown while public/banner.webp loads (or if it's missing).
 function BannerFallback() {
   return (
@@ -209,19 +212,45 @@ export default function ProfileCard() {
       </div>
 
       <div className="px-4 pb-4 sm:px-6">
-        {/* Avatar + company/education column */}
-        <div className="flex items-start justify-between">
-          <div className="relative z-10 -mt-[62px] shrink-0 rounded-full bg-card p-1.5 sm:-mt-[76px]">
-            <img
-              src={`${BASE}dp.webp`}
-              alt="Faisal Amin"
-              className="size-[116px] rounded-full bg-brand object-cover sm:size-[144px]"
-            />
+        {/* Avatar, pulled up over the banner */}
+        <div className="relative z-10 -mt-[62px] w-fit rounded-full bg-card p-1.5 sm:-mt-[76px]">
+          <img
+            src={`${BASE}dp.webp`}
+            alt="Faisal Amin"
+            className="size-[116px] rounded-full bg-brand object-cover sm:size-[144px]"
+          />
+        </div>
+
+        {/* Identity and the company/school column sit side by side, the way
+            they do on LinkedIn — the name starts level with the company. */}
+        <div className="mt-3 flex items-start justify-between gap-6">
+          <div className="min-w-0">
+            <h1 className="flex items-center gap-1.5 text-2xl font-semibold">
+              {SITE.name}
+              <BadgeCheck className="size-5 text-[#38434f]" aria-label="Verified" />
+            </h1>
+            <p className="mt-0.5 text-base leading-snug">
+              Senior Product Designer for your next big idea — I function as a founding designer that
+              talks shipping.
+            </p>
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              {SITE.location} ·{' '}
+              <button
+                onClick={() => setContactOpen(true)}
+                className="cursor-pointer font-semibold text-primary hover:underline"
+              >
+                Contact info
+              </button>
+            </p>
+            <button
+              onClick={() => navigate('/network')}
+              className="mt-1 cursor-pointer text-sm font-semibold text-primary hover:underline"
+            >
+              500+ connections
+            </button>
           </div>
 
-          {/* Right column — company, school and the numbers, so the desktop
-              profile doesn't trail off into empty space. */}
-          <div className="hidden w-[260px] shrink-0 flex-col gap-3 pt-3 md:flex">
+          <div className="hidden w-[260px] shrink-0 flex-col gap-2 md:flex">
             <a
               href={CURRENT_COMPANY.url}
               target="_blank"
@@ -251,33 +280,6 @@ export default function ProfileCard() {
               </span>
             </a>
           </div>
-        </div>
-
-        {/* Identity */}
-        <div className="mt-3">
-          <h1 className="flex items-center gap-1.5 text-2xl font-semibold">
-            {SITE.name}
-            <BadgeCheck className="size-5 text-[#38434f]" aria-label="Verified" />
-          </h1>
-          <p className="mt-0.5 text-base leading-snug">
-            Senior Product Designer for your next big idea — I function as a founding designer that
-            talks shipping.
-          </p>
-          <p className="mt-1.5 text-sm text-muted-foreground">
-            {SITE.location} ·{' '}
-            <button
-              onClick={() => setContactOpen(true)}
-              className="cursor-pointer font-semibold text-primary hover:underline"
-            >
-              Contact info
-            </button>
-          </p>
-          <button
-            onClick={() => navigate('/network')}
-            className="mt-1 cursor-pointer text-sm font-semibold text-primary hover:underline"
-          >
-            500+ connections
-          </button>
         </div>
 
         {/* Actions */}
@@ -337,6 +339,7 @@ export default function ProfileCard() {
 
       {/* Profile tabs — the site's entire navigation */}
       <nav
+        id={TAB_STRIP_ID}
         aria-label="Profile sections"
         className="flex overflow-x-auto border-t border-line px-2 sm:px-4"
       >
@@ -345,7 +348,9 @@ export default function ProfileCard() {
           return (
             <button
               key={tab.id}
-              onClick={() => navigate(tab.path)}
+              // Tabs replace rather than stack, so Back leaves the site
+              // instead of rewinding through every tab you opened.
+              onClick={() => navigate(tab.path, { replace: true })}
               aria-current={active ? 'page' : undefined}
               className={cn(
                 'relative cursor-pointer px-4 py-3 text-sm font-semibold whitespace-nowrap transition-colors',

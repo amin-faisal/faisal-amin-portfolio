@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import { useMessaging } from './Messaging.jsx'
 import { cn } from '../lib/utils.js'
+import { navOptions } from '../lib/nav.js'
 import {
   PROJECTS,
   SERVICES,
@@ -105,7 +106,7 @@ function SearchBox() {
                 onMouseDown={(e) => {
                   e.preventDefault()
                   setQuery('')
-                  navigate(path)
+                  navigate(path, navOptions(path))
                 }}
               >
                 {inner}
@@ -135,7 +136,7 @@ export default function TopNav() {
     return (
       <button
         key={label}
-        onClick={() => (action ? action() : navigate(path))}
+        onClick={() => (action ? action() : navigate(path, navOptions(path)))}
         className={cn(
           'relative flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1',
           active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
@@ -152,7 +153,7 @@ export default function TopNav() {
 
   const meButton = (
     <button
-      onClick={() => navigate('/')}
+      onClick={() => navigate('/', { replace: true })}
       className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground"
     >
       <img src={`${BASE}dp.webp`} alt="Faisal Amin" className="size-6 rounded-full bg-brand object-cover" />
@@ -164,7 +165,7 @@ export default function TopNav() {
     <>
       <header className="sticky top-0 z-40 border-b border-line bg-card">
         <div className="mx-auto flex h-[52px] max-w-[1128px] items-center gap-2 px-4">
-          <button onClick={() => navigate('/')} aria-label="Home" className="shrink-0 cursor-pointer">
+          <button onClick={() => navigate('/', { replace: true })} aria-label="Home" className="shrink-0 cursor-pointer">
             <img src={`${BASE}LinkedIn.svg`} alt="" className="size-[34px]" />
           </button>
 
